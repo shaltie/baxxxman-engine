@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GuardinChase : GuardinBehavior
 {
-  private void OnDisable()
+    private void OnDisable()
     {
         this.guardin.scatter.Enable();
     }
@@ -23,7 +23,11 @@ public class GuardinChase : GuardinBehavior
                 // If the distance in this direction is less than the current
                 // min distance then this direction becomes the new closest
                 Vector3 newPosition = transform.position + new Vector3(availableDirection.x, availableDirection.y);
-                float distance = (guardin.target.position - newPosition).sqrMagnitude;
+
+                float distance = minDistance;
+
+                if (guardin.target != null)
+                    distance = (guardin.target.position - newPosition).sqrMagnitude;
 
                 if (distance < minDistance)
                 {
@@ -31,6 +35,7 @@ public class GuardinChase : GuardinBehavior
                     minDistance = distance;
                 }
             }
+
 
             guardin.movement.SetDirection(direction);
         }

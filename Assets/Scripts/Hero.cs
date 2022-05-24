@@ -19,21 +19,21 @@ public class Hero : MonoBehaviour
     {
         // Set the new direction based on the current input
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
-            movement.SetDirection(Vector2.up);
+            movement.SetDirection(Vector2.up, rotation: Quaternion.Euler(0, 0, 270), isPlayerRotate: true);
         }
         else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
-            movement.SetDirection(Vector2.down);
+            movement.SetDirection(Vector2.down, rotation: Quaternion.Euler(0, 0, 90), isPlayerRotate: true);
         }
         else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
-            movement.SetDirection(Vector2.left);
+            movement.SetDirection(Vector2.left, rotation: Quaternion.Euler(0, 0, 0), isPlayerRotate: true);
         }
         else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
-            movement.SetDirection(Vector2.right);
+            movement.SetDirection(Vector2.right, rotation: Quaternion.Euler(0, 0, 180), isPlayerRotate: true);
         }
 
         // Rotate pacman to face the movement direction
-        float angle = Mathf.Atan2(movement.direction.y, movement.direction.x);
-        transform.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.forward);
+        //float angle = Mathf.Atan2(movement.direction.y, movement.direction.x);
+        //transform.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.forward);
     }
 
     public void ResetState()
