@@ -80,6 +80,9 @@ public class Movement : MonoBehaviour
         }
 
         _target.transform.rotation = isPlayerRotate ? rotation : GetRotation(direction);
+
+        if(isPlayerRotate)
+            Debug.LogWarning(_target.transform.rotation.eulerAngles);
     }
 
     public bool Occupied(Vector2 direction)

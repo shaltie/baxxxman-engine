@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private ResultWindow _result;
+
     public Guardin[] guardins;
     public Hero hero;
     public Transform baxes;
@@ -14,25 +17,43 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public Text livesText;
 
+    [SerializeField] private UnityEvent _winGame;
     [SerializeField] private UnityEvent _gameOver;
 
     public int guardinMultiplier { get; private set; } = 1;
 
-    public int score  { get; private set; }
+    public int Count  { get; private set; }
     public int lives { get; private set; }
-
+    public int MaxCount { get; private set; }
+    public int Level { get; private set; }
 
     private void Awake()
     {
+        if (SaveData.Has(SaveData.Level))
+            Level = SaveData.GetInt(SaveData.Level);
+        else
+            Level = 1;
+    }
+
+    private void Start()
+    {
         NewGame();
+
+        _result.ShowResult();
     }
 
     private void Update()
     {
-        if (lives <= 0 && Input.anyKey)
-        {
-            NewGame();
-        }
+        //if (lives <= 0 && Input.anyKey)
+        //{
+        //    NewGame();
+        //}
+    }
+
+    public void SaveNextLevel()
+    {
+        Level++;
+        SaveData.Save(SaveData.Level, Level);
     }
 
     private void NewGame()
@@ -40,6 +61,15 @@ public class GameManager : MonoBehaviour
         SetScore(0);
         SetLives(3);
         NewRound();
+
+        _result.ShowResult();
+        Invoke(nameof(SetMaxBax), 0.1f);
+    }
+
+    private void SetMaxBax()
+    {
+        MaxCount = FindObjectsOfType<Bax>(true).ToList().Count;
+        _result.ShowResult();
     }
 
     private void NewRound()
@@ -49,6 +79,7 @@ public class GameManager : MonoBehaviour
         {
             bax.gameObject.SetActive(true);
         }
+
         ResetState();
     }
 
@@ -79,12 +110,14 @@ public class GameManager : MonoBehaviour
     private void SetLives(int lives)
     {
         this.lives = lives;
+        _result.ShowResult();
         // livesText.text = "x" + lives.ToString();
     }
 
     private void SetScore(int score)
     {
-        this.score = score;
+        this.Count = score;
+        _result.ShowResult();
         // scoreText.text = score.ToString().PadLeft(2, '0');
     }
 
@@ -107,19 +140,22 @@ public class GameManager : MonoBehaviour
     public void GuardinCaught(Guardin guardin)
     {
         int points = guardin.points * this.guardinMultiplier;
-        SetScore(this.score + points);
+        SetScore(this.Count + points);
         this.guardinMultiplier++;
     }
 
     public void BaxCollected(Bax bax)
     {
         bax.gameObject.SetActive(false);
-        SetScore(this.score + bax.points);
+        //SetScore(this.Count + bax.points);
+        SetScore(this.Count + 1);
+        _result.ShowResult();
 
         if (!HasRemainingBax())
         {
-            this.hero.gameObject.SetActive(false);
-            Invoke(nameof(NewRound), 3.0f);
+            _winGame?.Invoke();
+            //this.hero.gameObject.SetActive(false);
+            //Invoke(nameof(NewRound), 3.0f);
         }
     }
 

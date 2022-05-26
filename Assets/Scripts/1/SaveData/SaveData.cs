@@ -8,6 +8,7 @@ public sealed class SaveData
     public const string Gems = nameof(Gems);
     public const string Accelerate = nameof(Accelerate);
     public const string Sound = nameof(Sound);
+    public const string Level = nameof(Level);
 
     public static bool Has(string key)
     {
