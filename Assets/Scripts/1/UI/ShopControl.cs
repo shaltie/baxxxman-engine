@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class ShopControl : MonoBehaviour
 {
+    [SerializeField] private GameObject _window;
+    [SerializeField] private GameObject _nextWindow;
     [SerializeField] private Text _gems;
 
     private const int _acceleratePrice = 200;
+    private bool _isNextWindow = false;
 
     private void Start()
     {
@@ -20,6 +23,16 @@ public class ShopControl : MonoBehaviour
         {
             UpdateGems(0);
         }
+    }
+
+    public void SetNextWindow(bool isNextWindow) => _isNextWindow = isNextWindow;
+
+    public void ShowWindow()
+    {
+        if (_isNextWindow)
+            _nextWindow.SetActive(true);
+        else
+            _window.SetActive(true);
     }
 
     public void TryBuyAccelerate()

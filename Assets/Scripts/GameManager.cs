@@ -8,6 +8,7 @@ using System.Linq;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private ResultWindow _result;
+    [SerializeField] private List<Map> _maps;
 
     public Guardin[] guardins;
     public Hero hero;
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        SetupLevel(Level);
         NewGame();
 
         _result.ShowResult();
@@ -182,5 +184,27 @@ public class GameManager : MonoBehaviour
     private void ResetGuardinMultiplier()
     {
         this.guardinMultiplier = 1;
+    }
+
+    private void SetupLevel(int index)
+    {
+        ResetAllMap();
+
+        if (index < 0)
+            index = 0;
+
+        if (_maps.Count < index)
+            index = _maps.Count - 1;
+        else
+            index--;
+
+        baxes = _maps[index].Money;
+        _maps[index].gameObject.SetActive(true);
+    }
+
+    private void ResetAllMap()
+    {
+        foreach (var map in _maps)
+            map.gameObject.SetActive(false);
     }
 }

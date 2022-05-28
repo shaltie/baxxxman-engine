@@ -19,8 +19,6 @@ public class ResultWindow : MonoBehaviour
 
     public void ShowResult()
     {
-        Debug.LogWarning(_gameManager.Level);
-
         foreach (var levelText in _levelText)
             levelText.text = string.Format(levelText.text, _gameManager.Level);
 
