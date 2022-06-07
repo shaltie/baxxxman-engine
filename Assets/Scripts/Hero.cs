@@ -4,12 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(Movement))]
 public class Hero : MonoBehaviour
 {
+    [SerializeField] private EnemyType _enemyType;
     [SerializeField] private SwipeControl _swipeControl;
 
     public AnimatedSprite deathSequence;
     public SpriteRenderer spriteRenderer { get; private set; }
-    public new Collider2D collider { get; private set; }
+    public Collider2D collider { get; private set; }
     public Movement movement { get; private set; }
+    public EnemyType EnemyType => _enemyType;
 
     private void Awake()
     {
@@ -26,6 +28,15 @@ public class Hero : MonoBehaviour
     private void OnDisable()
     {
         _swipeControl.Swiped -= Swipe;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        Debug.Log(collision.name);
+
+        if (collision.TryGetComponent(out Fire fire))
+            FindObjectOfType<GameManager>().HeroCaught();
     }
 
     private void Update()

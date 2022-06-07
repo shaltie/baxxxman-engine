@@ -5,6 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Movement))]
 public class Guardin : MonoBehaviour
 {
+    [SerializeField] private EnemyType _enemyType;
+
+    public Collider2D Collider { get; private set; }
+    public EnemyType EnemyType => _enemyType;
     public Movement movement { get; private set; }
     public GuardinHome home { get; private set; }
     public GuardinScatter scatter { get; private set; }
@@ -16,6 +20,7 @@ public class Guardin : MonoBehaviour
 
     private void Awake()
     {
+        Collider = GetComponent<Collider2D>();
         movement = GetComponent<Movement>();
         home = GetComponent<GuardinHome>();
         scatter = GetComponent<GuardinScatter>();

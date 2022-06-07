@@ -80,9 +80,6 @@ public class Movement : MonoBehaviour
         }
 
         _target.transform.rotation = isPlayerRotate ? rotation : GetRotation(direction);
-
-        if(isPlayerRotate)
-            Debug.LogWarning(_target.transform.rotation.eulerAngles);
     }
 
     public bool Occupied(Vector2 direction)
@@ -91,9 +88,6 @@ public class Movement : MonoBehaviour
         
         // If no collider is hit then there is no obstacle in that direction
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, Vector2.one * 0.75f, 0f, direction, 1.0f, obstacleLayer);
-
-        Debug.Log("Ocupied: " + direction.ToString() + ", " + (hit.collider != null));
-
         return hit.collider != null;
     }
 

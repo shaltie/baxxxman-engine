@@ -17,20 +17,13 @@ public class GuardinScatter : GuardinBehavior
 
         //Debug.Log((node != null) + "_" + this.enabled + "_" + !guardin.frightened.enabled);
 
-        Debug.Log("OnTriggerEnter2D. Enabled: " + enabled);
-
         if (node != null && !guardin.frightened.enabled)
         {
-            Debug.Log("Avaible derections count: " + node.availableDirections.Count);
             // Pick a random available direction
             int index = Random.Range(0, node.availableDirections.Count);
 
-            Debug.Log("Avaible derections choosed index: " + index);
-
             // Prefer not to go back the same direction so increment the index to
             // the next available direction
-
-            Debug.Log("Movement direction: " + node.availableDirections[index] + "__" + -guardin.movement.direction);
 
             if (node.availableDirections[index] == guardin.movement.direction && node.availableDirections.Count > 1)
             {
@@ -43,6 +36,7 @@ public class GuardinScatter : GuardinBehavior
                 }
             }
 
+            Debug.Log("OnTriggerEnter2D: " + node.availableDirections[index]);
             guardin.movement.SetDirection(node.availableDirections[index]);
         }
     }
