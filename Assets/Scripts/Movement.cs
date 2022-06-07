@@ -6,7 +6,7 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _target;
 
-    private Dictionary<Vector2, Quaternion> _directions = new Dictionary<Vector2, Quaternion>()
+    private readonly Dictionary<Vector2, Quaternion> _directions = new Dictionary<Vector2, Quaternion>()
     {
         { Vector2.up, Quaternion.Euler(0, 0, 90) },
         { Vector2.down, Quaternion.Euler(0, 0, 270) },
@@ -20,9 +20,9 @@ public class Movement : MonoBehaviour
     public LayerMask obstacleLayer;
 
     public new Rigidbody2D rigidbody { get; private set; }
-    public Vector2 direction { get; private set; }
-    public Vector2 nextDirection { get; private set; }
-    public Vector3 startingPosition { get; private set; }
+    public Vector2 direction;// { get; private set; }
+    public Vector2 nextDirection;// { get; private set; }
+    public Vector3 startingPosition;// { get; private set; }
 
     private void Awake()
     {

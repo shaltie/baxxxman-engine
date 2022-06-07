@@ -1,11 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Movement))]
 public class Guardin : MonoBehaviour
 {
     [SerializeField] private EnemyType _enemyType;
+
+    private readonly List<Vector2> _directions = new List<Vector2>()
+    {
+        Vector2.up,
+        Vector2.down,
+        Vector2.left,
+        Vector2.right
+    };
 
     public Collider2D Collider { get; private set; }
     public EnemyType EnemyType => _enemyType;
@@ -73,5 +82,15 @@ public class Guardin : MonoBehaviour
                 FindObjectOfType<GameManager>().HeroCaught();
             }
         }
+
+        //if(collision.gameObject.TryGetComponent(out Wall wall))
+        //{
+        //    var freeDirection = _directions.Where(direction => direction != movement.direction).ToList();
+
+        //    int randomIndex = Random.Range(0, freeDirection.Count);
+        //    Vector2 ranomDirection = _directions[randomIndex];
+
+        //    movement.SetDirection(ranomDirection, true);
+        //}
     }
 }

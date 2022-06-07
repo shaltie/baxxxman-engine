@@ -146,6 +146,8 @@ public class GameManager : MonoBehaviour
         this.guardinMultiplier++;
     }
 
+    public void Win() => _winGame?.Invoke();
+
     public void BaxCollected(Bax bax)
     {
         bax.gameObject.SetActive(false);
@@ -155,7 +157,7 @@ public class GameManager : MonoBehaviour
 
         if (!HasRemainingBax())
         {
-            _winGame?.Invoke();
+            //_winGame?.Invoke();
             //this.hero.gameObject.SetActive(false);
             //Invoke(nameof(NewRound), 3.0f);
         }

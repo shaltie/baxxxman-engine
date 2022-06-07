@@ -36,7 +36,6 @@ public class GuardinScatter : GuardinBehavior
                 }
             }
 
-            Debug.Log("OnTriggerEnter2D: " + node.availableDirections[index]);
             guardin.movement.SetDirection(node.availableDirections[index]);
         }
     }

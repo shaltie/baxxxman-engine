@@ -38,7 +38,6 @@ public class GuardinChase : GuardinBehavior
                 }
             }
 
-            Debug.Log(direction);
             guardin.movement.SetDirection(direction);
         }
     }

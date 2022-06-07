@@ -6,6 +6,9 @@ public class Hero : MonoBehaviour
 {
     [SerializeField] private EnemyType _enemyType;
     [SerializeField] private SwipeControl _swipeControl;
+    [SerializeField] private int _maxCristalCount;
+
+    private int _currentCristalCount;
 
     public AnimatedSprite deathSequence;
     public SpriteRenderer spriteRenderer { get; private set; }
@@ -32,11 +35,20 @@ public class Hero : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        Debug.Log(collision.name);
-
         if (collision.TryGetComponent(out Fire fire))
             FindObjectOfType<GameManager>().HeroCaught();
+
+        if (collision.TryGetComponent(out Cristal cristal))
+        {
+            _currentCristalCount++;
+            Destroy(cristal.gameObject);
+
+            if (_currentCristalCount == _maxCristalCount)
+                FindObjectOfType<PortalControl>().Show();
+        }
+
+        if (collision.TryGetComponent(out Portal portal))
+            FindObjectOfType<GameManager>().Win();
     }
 
     private void Update()
