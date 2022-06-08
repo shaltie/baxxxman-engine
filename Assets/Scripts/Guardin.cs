@@ -82,15 +82,5 @@ public class Guardin : MonoBehaviour
                 FindObjectOfType<GameManager>().HeroCaught();
             }
         }
-
-        //if(collision.gameObject.TryGetComponent(out Wall wall))
-        //{
-        //    var freeDirection = _directions.Where(direction => direction != movement.direction).ToList();
-
-        //    int randomIndex = Random.Range(0, freeDirection.Count);
-        //    Vector2 ranomDirection = _directions[randomIndex];
-
-        //    movement.SetDirection(ranomDirection, true);
-        //}
     }
 }

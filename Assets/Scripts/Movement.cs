@@ -1,10 +1,14 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _target;
+    [SerializeField] private float _accelerateSpeed;
+    [SerializeField] private float _duration;
 
     private readonly Dictionary<Vector2, Quaternion> _directions = new Dictionary<Vector2, Quaternion>()
     {
@@ -13,6 +17,7 @@ public class Movement : MonoBehaviour
         { Vector2.left, Quaternion.Euler(0, 0, 180) },
         { Vector2.right, Quaternion.Euler(0, 0, 0) }
     };
+    private bool _isAccelerate = false;
 
     public float speed = 8f;
     public float speedMultiplier = 1f;
@@ -20,9 +25,9 @@ public class Movement : MonoBehaviour
     public LayerMask obstacleLayer;
 
     public new Rigidbody2D rigidbody { get; private set; }
-    public Vector2 direction;// { get; private set; }
-    public Vector2 nextDirection;// { get; private set; }
-    public Vector3 startingPosition;// { get; private set; }
+    public Vector2 direction { get; private set; }
+    public Vector2 nextDirection { get; private set; }
+    public Vector3 startingPosition { get; private set; }
 
     private void Awake()
     {
@@ -33,6 +38,12 @@ public class Movement : MonoBehaviour
     private void Start()
     {
         ResetState();
+    }
+
+    public void PlayAccelerate(UnityAction callback)
+    {
+        if(_isAccelerate == false)
+            StartCoroutine(WaitAccelerate(callback));
     }
 
     public void ResetState()
@@ -69,7 +80,9 @@ public class Movement : MonoBehaviour
         // otherwise we set it as the next direction so it'll automatically be
         // set when it does become available
 
-        if (forced || !Occupied(direction))
+        bool result = forced || !Occupied(direction);
+
+        if (result)
         {
             this.direction = direction;
             nextDirection = Vector2.zero;
@@ -79,7 +92,10 @@ public class Movement : MonoBehaviour
             nextDirection = direction;
         }
 
-        _target.transform.rotation = isPlayerRotate ? rotation : GetRotation(direction);
+        if (isPlayerRotate)
+            Rotate(result ? direction : nextDirection);
+        else
+            _target.transform.rotation = GetRotation(direction);
     }
 
     public bool Occupied(Vector2 direction)
@@ -94,5 +110,32 @@ public class Movement : MonoBehaviour
     private Quaternion GetRotation(Vector2 direction)
     {
         return _directions[direction];
+    }
+
+    private IEnumerator WaitAccelerate(UnityAction callback)
+    {
+        int accelerateCount = SaveData.GetInt(SaveData.Accelerate) - 1;
+        SaveData.Save(SaveData.Accelerate, accelerateCount);
+        callback?.Invoke();
+
+        _isAccelerate = true;
+        speed *= _accelerateSpeed;
+        yield return new WaitForSeconds(_duration);
+        speed /= _accelerateSpeed;
+        _isAccelerate = false;
+    }
+    
+    private void Rotate(Vector3 direction)
+    {
+        var rotate = Quaternion.LookRotation(direction).eulerAngles;
+
+        if (rotate.x != 0)
+        {
+            _target.transform.rotation = Quaternion.Euler(0, 0, rotate.x);
+        }
+        else if (rotate.y != 0)
+        {
+            _target.transform.rotation = Quaternion.Euler(0, 0, rotate.y + 90f);
+        }
     }
 }

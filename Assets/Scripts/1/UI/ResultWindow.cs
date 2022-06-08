@@ -10,6 +10,7 @@ public class ResultWindow : MonoBehaviour
     [SerializeField] private List<Text> _cristalText;
     [SerializeField] private List<Text> _levelText;
     [SerializeField] private Text _nextLevelText;
+    [SerializeField] private Text _accelerateText;
     [SerializeField] private Button _nextLevelButton;
 
     public void SelectBoost()
@@ -29,5 +30,6 @@ public class ResultWindow : MonoBehaviour
             cristalText.text = $"{_gameManager.Count}/{_gameManager.MaxCount}";
 
         _nextLevelText.text = string.Format(_nextLevelText.text, _gameManager.Level + 1);
+        _accelerateText.text = SaveData.GetInt(SaveData.Accelerate).ToString();
     }
 }

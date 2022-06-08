@@ -1998,6 +1998,7 @@ MonoBehaviour:
   - {fileID: 1369514053}
   - {fileID: 455367077}
   _nextLevelText: {fileID: 1891739424}
+  _accelerateText: {fileID: 555377069}
   _nextLevelButton: {fileID: 451463903}
 --- !u!1 &403166896
 GameObject:
@@ -3373,6 +3374,10 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 490057881}
+    - target: {fileID: 3994656693319722659, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5712590939233464091, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
       propertyPath: target
       value: 
@@ -3693,6 +3698,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 911472118}
+  _accelerateSpeed: 2
+  _duration: 2
   speed: 3
   speedMultiplier: 1
   initialDirection: {x: 0, y: 0}
@@ -5586,6 +5593,10 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 411437305}
+    - target: {fileID: 3994656693319722659, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5712590939233464091, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
       propertyPath: target
       value: 
@@ -6876,7 +6887,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1589015037}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 403166897}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: Accelerate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1589015037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6927,7 +6950,6 @@ GameObject:
   - component: {fileID: 1592577959}
   - component: {fileID: 1592577958}
   - component: {fileID: 1592577960}
-  - component: {fileID: 1592577961}
   m_Layer: 9
   m_Name: Walls
   m_TagString: Untagged
@@ -7895,18 +7917,6 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
---- !u!114 &1592577961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1592577956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 941adf95288379646903f8b5cb194ec3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1600387313
 GameObject:
   m_ObjectHideFlags: 0

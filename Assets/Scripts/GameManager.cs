@@ -52,6 +52,12 @@ public class GameManager : MonoBehaviour
         //}
     }
 
+    public void Accelerate()
+    {
+        if (TrySpendAccelerate())
+            FindObjectOfType<Hero>().movement.PlayAccelerate(() => _result.ShowResult());
+    }
+
     public void SaveNextLevel()
     {
         Level++;
@@ -209,5 +215,18 @@ public class GameManager : MonoBehaviour
     {
         foreach (var map in _maps)
             map.gameObject.SetActive(false);
+    }
+
+    private bool TrySpendAccelerate()
+    {
+        if (SaveData.Has(SaveData.Accelerate))
+        {
+            int accelerateCount = SaveData.GetInt(SaveData.Accelerate);
+            return accelerateCount > 0;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
