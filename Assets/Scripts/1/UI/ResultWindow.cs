@@ -13,8 +13,29 @@ public class ResultWindow : MonoBehaviour
     [SerializeField] private Text _accelerateText;
     [SerializeField] private Button _nextLevelButton;
 
-    public void SelectBoost()
+    public void BoostHealth()
     {
+        int health = 0;
+
+        if (SaveData.Has(SaveData.Health))
+            health = SaveData.GetInt(SaveData.Health);
+        else
+            health = _gameManager.LiveCount;
+
+        SaveData.Save(SaveData.Health, health + _gameManager.NextHealthCount);
+        _nextLevelButton.interactable = true;
+    }
+
+    public void BoostSpeed()
+    {
+        float speed = 0;
+
+        if (SaveData.Has(SaveData.Speed))
+            speed = SaveData.GetFloat(SaveData.Speed);
+        else
+            speed = FindObjectOfType<Hero>(true).movement.speed;
+
+        SaveData.Save(SaveData.Speed, speed + _gameManager.NextSpeed);
         _nextLevelButton.interactable = true;
     }
 

@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private ResultWindow _result;
     [SerializeField] private List<Map> _maps;
+    [SerializeField] private float _nextSpeed;
+    [SerializeField] private int _nextHealthCount;
+
+    public int LiveCount = 3;
 
     public Guardin[] guardins;
     public Hero hero;
@@ -27,6 +31,8 @@ public class GameManager : MonoBehaviour
     public int lives { get; private set; }
     public int MaxCount { get; private set; }
     public int Level { get; private set; }
+    public float NextSpeed => _nextSpeed;
+    public int NextHealthCount => _nextHealthCount;
 
     private void Awake()
     {
@@ -67,11 +73,19 @@ public class GameManager : MonoBehaviour
     private void NewGame()
     {
         SetScore(0);
-        SetLives(3);
+        SetLives(GetLive());
         NewRound();
 
         _result.ShowResult();
         Invoke(nameof(SetMaxBax), 0.1f);
+    }
+
+    private int GetLive()
+    {
+        if (SaveData.Has(SaveData.Health))
+            return SaveData.GetInt(SaveData.Health);
+
+        return LiveCount;
     }
 
     private void SetMaxBax()

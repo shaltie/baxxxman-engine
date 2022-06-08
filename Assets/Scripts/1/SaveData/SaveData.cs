@@ -5,6 +5,8 @@ using UnityEngine;
 
 public sealed class SaveData
 {
+    public const string Health = nameof(Health);
+    public const string Speed = nameof(Speed);
     public const string Gems = nameof(Gems);
     public const string Accelerate = nameof(Accelerate);
     public const string Sound = nameof(Sound);
@@ -20,6 +22,11 @@ public sealed class SaveData
         PlayerPrefs.SetInt(key, value);
     }
 
+    public static void Save(string key, float value)
+    {
+        PlayerPrefs.SetFloat(key, value);
+    }
+
     public static void Save(string key, string value)
     {
         PlayerPrefs.SetString(key, value);
@@ -33,5 +40,10 @@ public sealed class SaveData
     public static string GetString(string key)
     {
         return PlayerPrefs.GetString(key);
+    }
+
+    public static float GetFloat(string key)
+    {
+        return PlayerPrefs.GetFloat(key);
     }
 }

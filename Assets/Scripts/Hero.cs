@@ -23,6 +23,12 @@ public class Hero : MonoBehaviour
         movement = GetComponent<Movement>();
     }
 
+    private void Start()
+    {
+        if (SaveData.Has(SaveData.Speed))
+            movement.speed = SaveData.GetFloat(SaveData.Speed);
+    }
+
     private void OnEnable()
     {
         _swipeControl.Swiped += Swipe;
