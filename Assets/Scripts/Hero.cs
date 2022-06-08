@@ -78,8 +78,8 @@ public class Hero : MonoBehaviour
         }
 
         // Rotate pacman to face the movement direction
-        //float angle = Mathf.Atan2(movement.direction.y, movement.direction.x);
-        //transform.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.forward);
+        float angle = Mathf.Atan2(movement.direction.y, movement.direction.x);
+        transform.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg * (-1), Vector3.forward * (-1));
     }
 
     public void ResetState()

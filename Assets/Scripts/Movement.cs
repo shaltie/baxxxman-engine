@@ -92,10 +92,10 @@ public class Movement : MonoBehaviour
             nextDirection = direction;
         }
 
-        if (isPlayerRotate)
-            Rotate(result ? direction : nextDirection);
-        else
-            _target.transform.rotation = GetRotation(direction);
+        //if (isPlayerRotate)
+        //    Rotate(result ? direction : nextDirection);
+        //else
+        //    _target.transform.rotation = GetRotation(direction);
     }
 
     public bool Occupied(Vector2 direction)
@@ -128,6 +128,8 @@ public class Movement : MonoBehaviour
     private void Rotate(Vector3 direction)
     {
         var rotate = Quaternion.LookRotation(direction).eulerAngles;
+
+        Debug.Log(rotate);
 
         if (rotate.x != 0)
         {
