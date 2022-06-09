@@ -92,10 +92,8 @@ public class Movement : MonoBehaviour
             nextDirection = direction;
         }
 
-        //if (isPlayerRotate)
-        //    Rotate(result ? direction : nextDirection);
-        //else
-        //    _target.transform.rotation = GetRotation(direction);
+        if(isPlayerRotate == false)
+            _target.transform.rotation = GetRotation(direction);
     }
 
     public bool Occupied(Vector2 direction)

@@ -220,7 +220,6 @@ public class GameManager : MonoBehaviour
         else
             index--;
 
-        baxes = _maps[index].Money;
         guardins = _maps[index].Guardins.ToArray();
         _maps[index].gameObject.SetActive(true);
     }
