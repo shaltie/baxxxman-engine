@@ -64,6 +64,16 @@ public class GameManager : MonoBehaviour
             FindObjectOfType<Hero>().movement.PlayAccelerate(() => _result.ShowResult());
     }
 
+    public void HideAllGuardin()
+    {
+        foreach (var guardin in guardins)
+        {
+            Destroy(guardin.gameObject);
+        }
+
+        guardins = null;
+    }
+
     public void SaveNextLevel()
     {
         Level++;
@@ -108,6 +118,10 @@ public class GameManager : MonoBehaviour
     private void ResetState()
     {
         ResetGuardinMultiplier();
+
+        if (guardins == null)
+            return;
+
         for (int i = 0; i < this.guardins.Length; i++)
         {
             this.guardins[i].ResetState();
@@ -120,6 +134,9 @@ public class GameManager : MonoBehaviour
     {
         _gameOver?.Invoke();
         //gameOverText.enabled = true;
+
+        if (guardins == null)
+            return;
 
         for (int i = 0; i < this.guardins.Length; i++)
         {
@@ -173,6 +190,9 @@ public class GameManager : MonoBehaviour
         bax.gameObject.SetActive(false);
         //SetScore(this.Count + bax.points);
         SetScore(this.Count + 1);
+
+        SaveData.Save(SaveData.Gems, SaveData.GetInt(SaveData.Gems) + 1);
+
         _result.ShowResult();
 
         if (!HasRemainingBax())

@@ -9,7 +9,7 @@ public class ShopControl : MonoBehaviour
     [SerializeField] private GameObject _nextWindow;
     [SerializeField] private Text _gems;
 
-    private const int _acceleratePrice = 200;
+    private const int _acceleratePrice = 50;
     private bool _isNextWindow = false;
 
     private void Start()
@@ -66,6 +66,8 @@ public class ShopControl : MonoBehaviour
             SaveData.Save(SaveData.Gems, value);
         }
     }
+
+    public void UpdateGems() => _gems.text = SaveData.GetInt(SaveData.Gems).ToString();
 
     private void AddAccelerate()
     {

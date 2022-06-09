@@ -23,6 +23,7 @@ public class Movement : MonoBehaviour
     public float speedMultiplier = 1f;
     public Vector2 initialDirection;
     public LayerMask obstacleLayer;
+    public LayerMask doorLayer;
 
     public new Rigidbody2D rigidbody { get; private set; }
     public Vector2 direction { get; private set; }
@@ -98,10 +99,9 @@ public class Movement : MonoBehaviour
 
     public bool Occupied(Vector2 direction)
     {
-
-        
         // If no collider is hit then there is no obstacle in that direction
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, Vector2.one * 0.75f, 0f, direction, 1.0f, obstacleLayer);
+
         return hit.collider != null;
     }
 
@@ -121,21 +121,5 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(_duration);
         speed /= _accelerateSpeed;
         _isAccelerate = false;
-    }
-    
-    private void Rotate(Vector3 direction)
-    {
-        var rotate = Quaternion.LookRotation(direction).eulerAngles;
-
-        Debug.Log(rotate);
-
-        if (rotate.x != 0)
-        {
-            _target.transform.rotation = Quaternion.Euler(0, 0, rotate.x);
-        }
-        else if (rotate.y != 0)
-        {
-            _target.transform.rotation = Quaternion.Euler(0, 0, rotate.y + 90f);
-        }
     }
 }

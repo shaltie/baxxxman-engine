@@ -2184,7 +2184,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Accelerate
 
-    Buy Accelerate gems for 200 gems'
+    Buy Accelerate gems for 50 gems'
 --- !u!222 &898949711
 CanvasRenderer:
   m_ObjectHideFlags: 0
