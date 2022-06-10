@@ -2619,7 +2619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 911472118}
   _accelerateSpeed: 2
-  _duration: 2
+  _duration: 0.5
   speed: 3
   speedMultiplier: 1
   initialDirection: {x: 0, y: 0}
