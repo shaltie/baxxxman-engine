@@ -2,17 +2,13 @@ using UnityEngine;
 
 public class GuardinChase : GuardinBehavior
 {
-    private void OnDisable()
-    {
-        this.guardin.scatter.Enable();
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         Node node = other.GetComponent<Node>();
 
-        // Do nothing while the guardin is frightened
-        if (node != null && enabled && !guardin.frightened.enabled)
+        string guardinMode = SaveData.GetString(SaveData.GuardinMode);
+        if (node != null && guardinMode == "chase")
         {
             Vector2 direction = Vector2.zero;
             float minDistance = float.MaxValue;

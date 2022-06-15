@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2745539238626968092}
   - component: {fileID: 3149343458720274990}
   m_Layer: 7
-  m_Name: Guarding_Base
+  m_Name: Guarding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,13 +89,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec69bba798b0d449ead1840f806b4cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _guardinScatter: {fileID: 0}
+  _guardinScatter: {fileID: 2745539238626968092}
   _target: {fileID: 0}
   _accelerateSpeed: 0
   _duration: 0
   speed: 7
   speedMultiplier: 1
-  initialDirection: {x: 0, y: 0}
+  initialDirection: {x: -1, y: 0}
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  initialBehavior: {fileID: 2745539238626968092}
+  initialBehavior: {fileID: 2648373311867995754}
   target: {fileID: 0}
   points: 200
 --- !u!114 &2648373311867995754
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1458201771694215860}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10151ab47f4bf43a29caeb5e8cad0123, type: 3}
   m_Name: 

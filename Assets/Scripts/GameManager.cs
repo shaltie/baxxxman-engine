@@ -288,4 +288,8 @@ public class GameManager : MonoBehaviour
             return false;
         }
     }
+
+    public void SetGuardinMode(string mode) {
+        SaveData.Save(SaveData.GuardinMode, mode);
+    }
 }

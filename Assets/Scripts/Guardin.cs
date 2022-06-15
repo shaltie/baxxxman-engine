@@ -16,8 +16,6 @@ public class Guardin : MonoBehaviour
     public GuardinHome home { get; private set; }
     public GuardinScatter scatter { get; private set; }
     public GuardinChase chase { get; private set; }
-    public GuardinFrightened frightened { get; private set; }
-    public GuardinBehavior initialBehavior;
     public Transform target;
     public int points = 200;
 
@@ -28,7 +26,6 @@ public class Guardin : MonoBehaviour
         home = GetComponent<GuardinHome>();
         scatter = GetComponent<GuardinScatter>();
         chase = GetComponent<GuardinChase>();
-        frightened = GetComponent<GuardinFrightened>();
     }
 
     private void Start()
@@ -41,16 +38,16 @@ public class Guardin : MonoBehaviour
         _isFollow = true;
         this.target = target;
 
-        chase.Enable();
-        scatter.Disable();
+        // chase.Enable();
+        // scatter.Disable();
     }
 
     public void StopFollow()
     {
         this.target = null;
 
-        chase.Disable();
-        scatter.Enable();
+        // chase.Disable();
+        // scatter.Enable();
         _isFollow = false;
     }
 
@@ -58,20 +55,8 @@ public class Guardin : MonoBehaviour
     {
         gameObject.SetActive(true);
         movement.ResetState();
-
-        frightened.Disable();
-        chase.Disable();
-        scatter.Enable();
-
-        if (home != initialBehavior)
-        {
-            home.Disable();
-        }
-
-        if (initialBehavior != null)
-        {
-            initialBehavior.Enable();
-        }
+        // chase.Disable();
+        // scatter.Enable();
     }
 
     public void SetPosition(Vector3 position)
@@ -85,14 +70,7 @@ public class Guardin : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Baxxxman"))
         {
-            if (frightened.enabled)
-            {
-                FindObjectOfType<GameManager>().GuardinCaught(this);
-            }
-            else
-            {
-                FindObjectOfType<GameManager>().HeroCaught();
-            }
+            FindObjectOfType<GameManager>().HeroCaught();
         }
     }
 
@@ -100,14 +78,7 @@ public class Guardin : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Baxxxman"))
         {
-            if (frightened.enabled)
-            {
-                FindObjectOfType<GameManager>().GuardinCaught(this);
-            }
-            else
-            {
-                FindObjectOfType<GameManager>().HeroCaught();
-            }
+            FindObjectOfType<GameManager>().HeroCaught();
         }
 
         if (collision.TryGetComponent(out Bite bite))

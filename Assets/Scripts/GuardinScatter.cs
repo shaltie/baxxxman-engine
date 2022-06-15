@@ -5,21 +5,18 @@ public class GuardinScatter : GuardinBehavior
 {
     private Node _node;
 
-    private void OnDisable()
-    {
-        guardin.chase.Enable();
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         _node = other.GetComponent<Node>();
 
-        // Do nothing while the ghost is frightened
+        Debug.Log("Scatter: Guardin mode = " + SaveData.GetString(SaveData.GuardinMode));
+        Debug.Log("Scatter: Guardin NODE = " + _node);
 
-        //Debug.Log((node != null) + "_" + this.enabled + "_" + !guardin.frightened.enabled);
+        string guardinMode = SaveData.GetString(SaveData.GuardinMode);
 
-        if (_node != null && !guardin.frightened.enabled)
+        if (_node != null && guardinMode == "scatter")
         {
+            
             // Pick a random available direction
             int index = Random.Range(0, _node.availableDirections.Count);
 
@@ -36,18 +33,15 @@ public class GuardinScatter : GuardinBehavior
                     index = 0;
                 }
             }
-
+            Debug.Log("Scatter SetDirection " + _node.availableDirections[index]);
             guardin.movement.SetDirection(_node.availableDirections[index]);
         }
     }
 
     public void GenerateNewDirection()
     {
-        // Do nothing while the ghost is frightened
 
-        //Debug.Log((node != null) + "_" + this.enabled + "_" + !guardin.frightened.enabled);
-
-        if (_node != null && !guardin.frightened.enabled)
+        if (_node != null)
         {
             // Pick a random available direction
             int index = Random.Range(0, _node.availableDirections.Count);
@@ -65,7 +59,7 @@ public class GuardinScatter : GuardinBehavior
                     index = 0;
                 }
             }
-
+            Debug.Log("Scatter GenerateNewDirection guarding move");
             guardin.movement.SetDirection(_node.availableDirections[index]);
         }
     }
