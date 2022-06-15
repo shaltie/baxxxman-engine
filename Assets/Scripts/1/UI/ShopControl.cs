@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ShopControl : MonoBehaviour
@@ -10,6 +11,7 @@ public class ShopControl : MonoBehaviour
     [SerializeField] private Text _gems;
 
     private const int _acceleratePrice = 50;
+    private const int _bitePrice = 50;
     private bool _isNextWindow = false;
 
     private void Start()
@@ -37,18 +39,12 @@ public class ShopControl : MonoBehaviour
 
     public void TryBuyAccelerate()
     {
-        if (SaveData.Has(SaveData.Gems))
-        {
-            int gemsCount = SaveData.GetInt(SaveData.Gems);
+        TryBuy(SaveData.Accelerate, _acceleratePrice, UpdateGems);
+    }
 
-            if (gemsCount >= _acceleratePrice)
-            {
-                gemsCount -= _acceleratePrice;
-                UpdateGems(gemsCount);
-                AddAccelerate();
-                SaveData.Save(SaveData.Gems, gemsCount);
-            }
-        }
+    public void TryBuyBite()
+    {
+        TryBuy(SaveData.Bite, _bitePrice, UpdateGems);
     }
 
     public void BuyGems(int value)
@@ -69,17 +65,33 @@ public class ShopControl : MonoBehaviour
 
     public void UpdateGems() => _gems.text = SaveData.GetInt(SaveData.Gems).ToString();
 
-    private void AddAccelerate()
+    private void TryBuy(string key, int price, UnityAction<int> callback)
     {
-        if (SaveData.Has(SaveData.Accelerate))
+        if (SaveData.Has(SaveData.Gems))
         {
-            int accelerateCount = SaveData.GetInt(SaveData.Accelerate);
-            accelerateCount++;
-            SaveData.Save(SaveData.Accelerate, accelerateCount);
+            int gems = SaveData.GetInt(SaveData.Gems);
+
+            if (gems >= price)
+            {
+                gems -= price;
+                callback?.Invoke(gems);
+                Add(key);
+                SaveData.Save(SaveData.Gems, gems);
+            }
+        }
+    }
+
+    private void Add(string key)
+    {
+        if (SaveData.Has(key))
+        {
+            int count = SaveData.GetInt(key);
+            count++;
+            SaveData.Save(key, count);
         }
         else
         {
-            SaveData.Save(SaveData.Accelerate, 1);
+            SaveData.Save(key, 1);
         }
     }
 

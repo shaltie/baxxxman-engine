@@ -7,6 +7,7 @@ public class Hero : MonoBehaviour
     [SerializeField] private EnemyType _enemyType;
     [SerializeField] private SwipeControl _swipeControl;
     [SerializeField] private int _maxCristalCount;
+    [SerializeField] private Bite _biteTemplate;
 
     private int _currentCristalCount;
 
@@ -37,6 +38,24 @@ public class Hero : MonoBehaviour
     private void OnDisable()
     {
         _swipeControl.Swiped -= Swipe;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.TryGetComponent(out Obstacle obstacle))
+        {
+            Debug.Log(obstacle.name);
+            obstacle.Move(movement.direction, movement.speed);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.TryGetComponent(out Obstacle obstacle))
+        {
+            Debug.Log("OnCollisionExit2D: " + obstacle.name);
+            obstacle.StopMove();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -102,6 +121,11 @@ public class Hero : MonoBehaviour
         //deathSequence.enabled = true;
         //deathSequence.spriteRenderer.enabled = true;
         //deathSequence.Restart();
+    }
+
+    public Transform CreateBite()
+    {
+        return Instantiate(_biteTemplate, transform.position, transform.rotation).transform;
     }
 
     private void Swipe(Vector3 direction)

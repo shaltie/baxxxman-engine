@@ -2,20 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Movement))]
 public class Guardin : MonoBehaviour
 {
     [SerializeField] private EnemyType _enemyType;
 
-    private readonly List<Vector2> _directions = new List<Vector2>()
-    {
-        Vector2.up,
-        Vector2.down,
-        Vector2.left,
-        Vector2.right
-    };
-
+    public bool _isFollow { get; private set; } = false;
     public Collider2D Collider { get; private set; }
     public EnemyType EnemyType => _enemyType;
     public Movement movement { get; private set; }
@@ -40,6 +34,24 @@ public class Guardin : MonoBehaviour
     private void Start()
     {
         ResetState();
+    }
+
+    public void Follow(Transform target)
+    {
+        _isFollow = true;
+        this.target = target;
+
+        chase.Enable();
+        scatter.Disable();
+    }
+
+    public void StopFollow()
+    {
+        this.target = null;
+
+        chase.Disable();
+        scatter.Enable();
+        _isFollow = false;
     }
 
     public void ResetState()
@@ -96,6 +108,12 @@ public class Guardin : MonoBehaviour
             {
                 FindObjectOfType<GameManager>().HeroCaught();
             }
+        }
+
+        if (collision.TryGetComponent(out Bite bite))
+        {
+            FindObjectOfType<GameManager>().StopBite();
+            Destroy(bite.gameObject);
         }
     }
 }

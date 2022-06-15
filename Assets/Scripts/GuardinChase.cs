@@ -9,8 +9,6 @@ public class GuardinChase : GuardinBehavior
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
-        return;
         Node node = other.GetComponent<Node>();
 
         // Do nothing while the guardin is frightened

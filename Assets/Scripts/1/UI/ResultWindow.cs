@@ -11,6 +11,7 @@ public class ResultWindow : MonoBehaviour
     [SerializeField] private List<Text> _levelText;
     [SerializeField] private Text _nextLevelText;
     [SerializeField] private Text _accelerateText;
+    [SerializeField] private Text _biteText;
     [SerializeField] private Button _nextLevelButton;
 
     public void BoostHealth()
@@ -52,5 +53,6 @@ public class ResultWindow : MonoBehaviour
 
         _nextLevelText.text = string.Format(_nextLevelText.text, _gameManager.Level + 1);
         _accelerateText.text = SaveData.GetInt(SaveData.Accelerate).ToString();
+        _biteText.text = SaveData.GetInt(SaveData.Bite).ToString();
     }
 }

@@ -60,8 +60,34 @@ public class GameManager : MonoBehaviour
 
     public void Accelerate()
     {
-        if (TrySpendAccelerate())
+        if (TrySpendBoost(SaveData.Accelerate))
             FindObjectOfType<Hero>().movement.PlayAccelerate(() => _result.ShowResult());
+    }
+
+    public void Bite()
+    {
+        if (TrySpendBoost(SaveData.Bite) && IsFollow() == false)
+        {
+            int biteCount = SaveData.GetInt(SaveData.Bite) - 1;
+            SaveData.Save(SaveData.Bite, biteCount);
+            _result.ShowResult();
+
+            Transform bite = FindObjectOfType<Hero>().CreateBite();
+
+            foreach (var guardin in guardins)
+                guardin.Follow(bite);
+        }
+    }
+
+    public void StopBite()
+    {
+        foreach (var guardin in guardins)
+            guardin.StopFollow();
+    }
+
+    private bool IsFollow()
+    {
+        return guardins.All(guardin => guardin._isFollow);
     }
 
     public void HideAllGuardin()
@@ -124,7 +150,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < this.guardins.Length; i++)
         {
-            this.guardins[i].ResetState();
+            //this.guardins[i].ResetState();
         }
 
         this.hero.ResetState();
@@ -250,12 +276,12 @@ public class GameManager : MonoBehaviour
             map.gameObject.SetActive(false);
     }
 
-    private bool TrySpendAccelerate()
+    private bool TrySpendBoost(string key)
     {
-        if (SaveData.Has(SaveData.Accelerate))
+        if (SaveData.Has(key))
         {
-            int accelerateCount = SaveData.GetInt(SaveData.Accelerate);
-            return accelerateCount > 0;
+            int count = SaveData.GetInt(key);
+            return count > 0;
         }
         else
         {

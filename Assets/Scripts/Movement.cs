@@ -6,6 +6,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour
 {
+    [SerializeField] private GuardinScatter _guardinScatter;
     [SerializeField] private SpriteRenderer _target;
     [SerializeField] private float _accelerateSpeed;
     [SerializeField] private float _duration;
@@ -81,11 +82,11 @@ public class Movement : MonoBehaviour
         // otherwise we set it as the next direction so it'll automatically be
         // set when it does become available
 
-        bool result = forced || !Occupied(direction);
-
-        if (result)
+        if (forced || !Occupied(direction))
         {
-            this.direction = direction;
+            if(direction != Vector2.zero)
+                this.direction = direction;
+
             nextDirection = Vector2.zero;
         }
         else
@@ -107,6 +108,12 @@ public class Movement : MonoBehaviour
 
     private Quaternion GetRotation(Vector2 direction)
     {
+        if (direction == Vector2.zero)
+        {
+            _guardinScatter.GenerateNewDirection();
+            return _directions[this.direction];
+        }
+
         return _directions[direction];
     }
 

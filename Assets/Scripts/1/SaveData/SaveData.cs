@@ -8,6 +8,7 @@ public sealed class SaveData
     public const string Health = nameof(Health);
     public const string Speed = nameof(Speed);
     public const string Gems = nameof(Gems);
+    public const string Bite = nameof(Bite);
     public const string Accelerate = nameof(Accelerate);
     public const string Sound = nameof(Sound);
     public const string Level = nameof(Level);
