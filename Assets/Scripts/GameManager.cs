@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
         }
 
         ResetState();
+        SetGuardinMode("scatter");
     }
 
     private void ResetState()

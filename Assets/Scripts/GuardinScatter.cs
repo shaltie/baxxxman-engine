@@ -5,6 +5,10 @@ public class GuardinScatter : GuardinBehavior
 {
     private Node _node;
 
+    private void Start() {
+        Debug.Log("Scatter started");
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         _node = other.GetComponent<Node>();
@@ -23,7 +27,9 @@ public class GuardinScatter : GuardinBehavior
             // Prefer not to go back the same direction so increment the index to
             // the next available direction
 
-            if (_node.availableDirections[index] == guardin.movement.direction && _node.availableDirections.Count > 1)
+            Debug.Log("Scatter Index: " + index + ". Count is: " + _node.availableDirections.Count);
+
+            if ( _node.availableDirections.Count > 1 && _node.availableDirections[index] == guardin.movement.direction)
             {
                 index++;
 
@@ -49,7 +55,7 @@ public class GuardinScatter : GuardinBehavior
             // Prefer not to go back the same direction so increment the index to
             // the next available direction
 
-            if (_node.availableDirections[index] == guardin.movement.direction && _node.availableDirections.Count > 1)
+            if (_node.availableDirections.Count > 1 && _node.availableDirections[index] == guardin.movement.direction)
             {
                 index++;
 
