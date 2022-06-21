@@ -271,6 +271,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7452750737825781032}
     - target: {fileID: 9017394085483622554, guid: 71a5292bf4dd844cb998850c2d7edfcd, type: 3}
+      propertyPath: _levelManager
+      value: 
+      objectReference: {fileID: 8594740706653872608}
+    - target: {fileID: 9017394085483622554, guid: 71a5292bf4dd844cb998850c2d7edfcd, type: 3}
       propertyPath: _maps.Array.data[0]
       value: 
       objectReference: {fileID: 0}

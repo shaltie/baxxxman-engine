@@ -1,23 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    string levelName = "level";
-    public void LoadLevel(int level) {
-        SceneManager.LoadScene(levelName + level);
+    string levelName = "Scenes/Level";
+    public int Level {get; private set;}
+
+    void Awake() {
+
+        GetLevel();
+        
     }
 
-    public void LoadMainMenu() {
-        SceneManager.LoadScene("Menu");
+    private void GetLevel() {
+
+        string _level = (SaveData.Has(SaveData.Level)) ? SaveData.Level : "1";
+        
+        if (Int32.TryParse(_level, out int j)){
+            Level = j;
+        } else {
+            Level = 1;
+        }
     }
 
-    public void LoadGameOver() {
-        SceneManager.LoadScene("GameOver");
+    public void SetNextLevelAsActual() {
+        Level++;
+        SaveData.Save(SaveData.Level, Level.ToString());
     }
 
-    public void ReloadCurrentScene() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    public void LoadScene(string name) => SceneManager.LoadScene(name);
+    /*
+    * Get current level from SaveData or 1 
+    * and load Scene with this level;
+    */
+    public void LoadActualLevel() {
+        string _level = levelName + Level.ToString();
+        SceneManager.LoadScene(_level);
+        return;
+        if(SceneManager.GetSceneByName(_level).IsValid()){
+            Debug.Log("LoadActualLevel: Load <" + _level + "> Scene");
+            SceneManager.LoadScene(_level);
+        } else {
+            Debug.Log("LoadActualLevel: No <" + _level + "> Scene Found");
+            SceneManager.LoadScene(levelName + "1");
+        }
+    }
+
+    // public void LoadLevel(int level) {
+    //     string _level = levelName + level.ToString();
+    //     if(SceneManager.GetSceneByName(_level).IsValid()){
+    //         SceneManager.LoadScene(_level);
+    //     } else {
+    //         SceneManager.LoadScene(level + "1");
+    //     }   
+    // }
 }

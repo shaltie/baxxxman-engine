@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Map> _maps;
     [SerializeField] private float _nextSpeed;
     [SerializeField] private int _nextHealthCount;
-    [SerializeField] private GameObject levelManager;
+    [SerializeField] private LevelManager _levelManager;
 
     public int LiveCount = 3;
 
@@ -30,43 +30,28 @@ public class GameManager : MonoBehaviour
     public int Count  { get; private set; }
     public int lives { get; private set; }
     public int MaxCount { get; private set; }
-    public int Level { get; private set; }
+    // public int Level { get; private set; }
     public float NextSpeed => _nextSpeed;
     public int NextHealthCount => _nextHealthCount;
 
-    private void Awake()
-    {
-        if (SaveData.Has(SaveData.Level))
-            Level = SaveData.GetInt(SaveData.Level);
-        else
-            Level = 1;
-    }
+    private void Awake() {}
 
     private void Start()
     {
-        SetupLevel(Level);
+        SetupLevel();
         NewGame();
 
         _result.ShowResult();
     }
 
-    private void SetupLevel(int level)
+    private void SetupLevel()
     {
-        if (level < 0)
-            level = 0;
 
-        if (_maps.Count < level)
-            level = _maps.Count - 1;
-        else
-            level--;
-
-        
-
-        SetActiveLevel(level);
+        int localLevel = 0; // Now al scenes must have only 1 level in _maps; @TODO add multiple local levels logic
 
         
         
-        Map mapScript = _maps[level].GetComponent<Map>();
+        Map mapScript = _maps[localLevel].GetComponent<Map>();
         Transform mapCoins = mapScript.mapCoins;
 
         foreach (Transform coin in mapCoins)
@@ -74,29 +59,13 @@ public class GameManager : MonoBehaviour
             coin.gameObject.SetActive(true);
         }
 
-        guardins = _maps[level].Guardins.ToArray();
+        guardins = _maps[localLevel].Guardins.ToArray();
         
     }
 
     public void SaveNextLevel()
     {
-        Level++;
-        SaveData.Save(SaveData.Level, Level);
-    }
-
-    private void SetActiveLevel(int level)
-    {
-        // foreach (var map in _maps) {
-        //     Debug.Log("Foreach levels: " + map);
-        //     map.gameObject.SetActive(false);
-        // }
-        // Debug.Log("Active Level: " + level);
-        // Debug.Log("Active Level map: " + _maps[level].gameObject);
-        // _maps[level].gameObject.SetActive(true);
-
-        levelManager.GetComponent<LevelManager>().LoadLevel(level);
-
-            
+        _levelManager.LoadActualLevel();
     }
 
     public void Accelerate()
@@ -245,7 +214,10 @@ public class GameManager : MonoBehaviour
         this.guardinMultiplier++;
     }
 
-    public void Win() => _winGame?.Invoke();
+    public void Win() {
+        _levelManager.SetNextLevelAsActual(); // Change Level to next
+        _winGame?.Invoke();
+    }
 
     public void BaxCollected(Bax bax)
     {
