@@ -23,6 +23,29 @@ public class Obstacle : MonoBehaviour
         _rigidbody.MovePosition(position + translation);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.TryGetComponent(out Hero hero))
+        {
+            _rigidbody.bodyType = RigidbodyType2D.Dynamic;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.collider.TryGetComponent(out Hero hero))
+        {
+            _rigidbody.bodyType = RigidbodyType2D.Dynamic;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.TryGetComponent(out Hero hero))
+        {
+            _rigidbody.bodyType = RigidbodyType2D.Static;
+        }
+    }
     public void Move(Vector2 direction, float speed)
     {
         _isMove = true;
