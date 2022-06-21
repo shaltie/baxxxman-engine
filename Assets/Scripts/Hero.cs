@@ -44,7 +44,6 @@ public class Hero : MonoBehaviour
     {
         if (collision.collider.TryGetComponent(out Obstacle obstacle))
         {
-            Debug.Log(obstacle.name);
             obstacle.Move(movement.direction, movement.speed);
         }
     }
@@ -53,7 +52,6 @@ public class Hero : MonoBehaviour
     {
         if (collision.collider.TryGetComponent(out Obstacle obstacle))
         {
-            Debug.Log("OnCollisionExit2D: " + obstacle.name);
             obstacle.StopMove();
         }
     }

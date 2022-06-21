@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
-  m_Name: BaxMajor_Tile
+  m_Name: Door_Enemy_Tile
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 21300000, guid: d03008531bacb40cdad05221a2ec47f3, type: 3}
-  m_DefaultGameObject: {fileID: 950132982229057740, guid: cd7f5390ce6e847fa9727681f2f2168f, type: 3}
+  m_DefaultSprite: {fileID: 21300000, guid: 48ec17a363b28a14fb8fa3f40d386e62, type: 3}
+  m_DefaultGameObject: {fileID: 2929933213803090240, guid: 8f59004826d5f1548b0576394550bab6, type: 3}
   m_DefaultColliderType: 0
   m_TilingRules: []
