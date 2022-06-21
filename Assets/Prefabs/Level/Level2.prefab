@@ -2385,6 +2385,7 @@ MonoBehaviour:
   _guardins:
   - {fileID: 3103342594129167747}
   - {fileID: 3103342594850948263}
+  mapCoins: {fileID: 7230101032010657795}
 --- !u!114 &7230101031523444121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2942,7 +2943,7 @@ TilemapRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7230101031604697865}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -4025,11 +4026,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4352165514421853658, guid: 9d142aaa918b54110af70cf0bc4ffeb7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.49
+      value: -1.55
       objectReference: {fileID: 0}
     - target: {fileID: 4352165514421853658, guid: 9d142aaa918b54110af70cf0bc4ffeb7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.51
+      value: 5.41
       objectReference: {fileID: 0}
     - target: {fileID: 4352165514421853658, guid: 9d142aaa918b54110af70cf0bc4ffeb7, type: 3}
       propertyPath: m_LocalPosition.z

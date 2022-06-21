@@ -14,9 +14,8 @@ public class GameManager : MonoBehaviour
 
     public int LiveCount = 3;
 
-    public Guardin[] guardins;
+    private Guardin[] guardins;
     public Hero hero;
-    public Transform baxes;
 
     public Text gameOverText;
     public Text scoreText;
@@ -50,12 +49,50 @@ public class GameManager : MonoBehaviour
         _result.ShowResult();
     }
 
-    private void Update()
+    private void SetupLevel(int level)
     {
-        //if (lives <= 0 && Input.anyKey)
-        //{
-        //    NewGame();
-        //}
+        if (level < 0)
+            level = 0;
+
+        if (_maps.Count < level)
+            level = _maps.Count - 1;
+        else
+            level--;
+
+        
+
+        SetActiveLevel(level);
+
+        
+        
+        Map mapScript = _maps[level].GetComponent<Map>();
+        Transform mapCoins = mapScript.mapCoins;
+
+        foreach (Transform coin in mapCoins)
+        {
+            coin.gameObject.SetActive(true);
+        }
+
+        guardins = _maps[level].Guardins.ToArray();
+        
+    }
+
+    public void SaveNextLevel()
+    {
+        Level++;
+        SaveData.Save(SaveData.Level, Level);
+    }
+
+    private void SetActiveLevel(int level)
+    {
+        foreach (var map in _maps) {
+            Debug.Log("Foreach levels: " + map);
+            map.gameObject.SetActive(false);
+        }
+        Debug.Log("Active Level: " + level);
+        Debug.Log("Active Level map: " + _maps[level].gameObject);
+        _maps[level].gameObject.SetActive(true);
+            
     }
 
     public void Accelerate()
@@ -100,11 +137,7 @@ public class GameManager : MonoBehaviour
         guardins = null;
     }
 
-    public void SaveNextLevel()
-    {
-        Level++;
-        SaveData.Save(SaveData.Level, Level);
-    }
+    
 
     private void NewGame()
     {
@@ -132,11 +165,9 @@ public class GameManager : MonoBehaviour
 
     private void NewRound()
     {
+
+        Debug.Log("New round");
         // gameOverText.enabled = false;
-        foreach (Transform bax in this.baxes)
-        {
-            bax.gameObject.SetActive(true);
-        }
 
         ResetState();
         SetGuardinMode("scatter");
@@ -151,7 +182,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < this.guardins.Length; i++)
         {
-            //this.guardins[i].ResetState();
+            this.guardins[i].ResetState();
         }
 
         this.hero.ResetState();
@@ -221,13 +252,6 @@ public class GameManager : MonoBehaviour
         SaveData.Save(SaveData.Gems, SaveData.GetInt(SaveData.Gems) + 1);
 
         _result.ShowResult();
-
-        if (!HasRemainingBax())
-        {
-            //_winGame?.Invoke();
-            //this.hero.gameObject.SetActive(false);
-            //Invoke(nameof(NewRound), 3.0f);
-        }
     }
 
     public void BaxMajorCollected(BaxMajor baxMajor)
@@ -237,45 +261,14 @@ public class GameManager : MonoBehaviour
         Invoke(nameof(ResetGuardinMultiplier), baxMajor.duration);
     }
 
-    private bool HasRemainingBax()
-    {
-        foreach (Transform bax in this.baxes)
-        {
-            if (bax.gameObject.activeSelf)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private void ResetGuardinMultiplier()
     {
         this.guardinMultiplier = 1;
     }
 
-    private void SetupLevel(int index)
-    {
-        ResetAllMap();
+    
 
-        if (index < 0)
-            index = 0;
-
-        if (_maps.Count < index)
-            index = _maps.Count - 1;
-        else
-            index--;
-
-        guardins = _maps[index].Guardins.ToArray();
-        _maps[index].gameObject.SetActive(true);
-    }
-
-    private void ResetAllMap()
-    {
-        foreach (var map in _maps)
-            map.gameObject.SetActive(false);
-    }
+    
 
     private bool TrySpendBoost(string key)
     {
