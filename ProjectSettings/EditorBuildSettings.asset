@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Baxxxman.unity
     guid: 3fc8acdd13e6c734bafef6554d6fdbcd
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: 4382de86361b5478f8a70b2692be2f05
+  - enabled: 1
+    path: Assets/Scenes/Level2.unity
+    guid: 92b0e8f84fe4c437ab17c7aa58e934d4
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: ffd5f413aff224fc6b9ea52b5229c4eb, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 42156226e249e44ee8ae5867942b7b0e, type: 2}

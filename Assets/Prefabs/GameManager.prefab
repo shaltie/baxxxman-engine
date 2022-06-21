@@ -45,15 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _result: {fileID: 0}
-  _maps:
-  - {fileID: 0}
-  - {fileID: 0}
+  _maps: []
   _nextSpeed: 0.5
   _nextHealthCount: 1
   LiveCount: 3
-  guardins: []
   hero: {fileID: 0}
-  baxes: {fileID: 0}
   gameOverText: {fileID: 0}
   scoreText: {fileID: 0}
   livesText: {fileID: 0}

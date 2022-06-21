@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Map> _maps;
     [SerializeField] private float _nextSpeed;
     [SerializeField] private int _nextHealthCount;
+    [SerializeField] private GameObject levelManager;
 
     public int LiveCount = 3;
 
@@ -85,13 +86,16 @@ public class GameManager : MonoBehaviour
 
     private void SetActiveLevel(int level)
     {
-        foreach (var map in _maps) {
-            Debug.Log("Foreach levels: " + map);
-            map.gameObject.SetActive(false);
-        }
-        Debug.Log("Active Level: " + level);
-        Debug.Log("Active Level map: " + _maps[level].gameObject);
-        _maps[level].gameObject.SetActive(true);
+        // foreach (var map in _maps) {
+        //     Debug.Log("Foreach levels: " + map);
+        //     map.gameObject.SetActive(false);
+        // }
+        // Debug.Log("Active Level: " + level);
+        // Debug.Log("Active Level map: " + _maps[level].gameObject);
+        // _maps[level].gameObject.SetActive(true);
+
+        levelManager.GetComponent<LevelManager>().LoadLevel(level);
+
             
     }
 
