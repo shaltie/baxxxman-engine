@@ -84,6 +84,8 @@ public class GameManager : MonoBehaviour
 
             Transform bite = FindObjectOfType<Hero>().CreateBite();
 
+            SetGuardinMode("chase");
+
             foreach (var guardin in guardins)
                 guardin.Follow(bite);
         }
@@ -91,6 +93,8 @@ public class GameManager : MonoBehaviour
 
     public void StopBite()
     {
+        SetGuardinMode("scatter");
+
         foreach (var guardin in guardins)
             guardin.StopFollow();
     }

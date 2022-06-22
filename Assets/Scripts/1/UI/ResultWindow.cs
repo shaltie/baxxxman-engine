@@ -49,7 +49,7 @@ public class ResultWindow : MonoBehaviour
             healthText.text = "Health Count: " + _gameManager.lives;
 
         foreach (var cristalText in _cristalText)
-            cristalText.text = $"{_gameManager.Count}/{_gameManager.MaxCount}";
+            cristalText.text = $"Gems: {_gameManager.Count}/{_gameManager.MaxCount}";
 
         _nextLevelText.text = string.Format(_nextLevelText.text, SaveData.Level);
         _accelerateText.text = SaveData.GetInt(SaveData.Accelerate).ToString();
