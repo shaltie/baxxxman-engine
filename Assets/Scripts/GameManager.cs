@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
         NewGame();
 
         _result.ShowResult();
+        Invoke(nameof(SetMaxBax), 0.1f);
     }
 
     private void SetupLevel()
