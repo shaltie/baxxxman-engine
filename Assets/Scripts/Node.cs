@@ -9,6 +9,8 @@ public class Node : MonoBehaviour
     public LayerMask obstacleLayer;
     public List<Vector2> availableDirections;// { get; private set; }
 
+    public bool IsObstacle => _isObstacle;
+
     private void Start()
     {
         if (_isObstacle)
