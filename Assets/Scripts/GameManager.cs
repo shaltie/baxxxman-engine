@@ -160,7 +160,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < this.guardins.Length; i++)
         {
-            this.guardins[i].ResetState();
+            //this.guardins[i].ResetState();
         }
 
         this.hero.ResetState();

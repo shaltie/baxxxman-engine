@@ -11,6 +11,9 @@ public class Node : MonoBehaviour
 
     private void Start()
     {
+        if (_isObstacle)
+            return;
+
         availableDirections = new List<Vector2>();
 
         // We determine if the direction is available by box casting to see if
@@ -23,15 +26,15 @@ public class Node : MonoBehaviour
 
     private void Update()
     {
-        if (_isObstacle)
-        {
-            availableDirections = new List<Vector2>();
+        //if (_isObstacle)
+        //{
+        //    availableDirections = new List<Vector2>();
 
-            CheckAvailableDirection(Vector2.up);
-            CheckAvailableDirection(Vector2.down);
-            CheckAvailableDirection(Vector2.left);
-            CheckAvailableDirection(Vector2.right);
-        }
+        //    CheckAvailableDirection(Vector2.up);
+        //    CheckAvailableDirection(Vector2.down);
+        //    CheckAvailableDirection(Vector2.left);
+        //    CheckAvailableDirection(Vector2.right);
+        //}
     }
 
     private void CheckAvailableDirection(Vector2 direction)
