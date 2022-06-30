@@ -134,6 +134,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: All Level Data
       objectReference: {fileID: 0}
+    - target: {fileID: 3973579384120843183, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973579384418487479, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5826917270399315968, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -292,6 +300,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6013017923070015535, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8368115672525645823, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

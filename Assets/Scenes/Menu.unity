@@ -2863,8 +2863,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1430602192}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: Load
-        m_Mode: 5
+        m_MethodName: LoadCurrentLevel
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4262,6 +4262,7 @@ GameObject:
   - component: {fileID: 1430602190}
   - component: {fileID: 1430602191}
   - component: {fileID: 1430602192}
+  - component: {fileID: 1430602193}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -4321,6 +4322,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4683795416bb83449b067c5c852ef664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1430602193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430602188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3440c9dd2d99246c9919c301afebddc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1449929316

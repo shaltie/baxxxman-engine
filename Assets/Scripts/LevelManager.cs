@@ -15,6 +15,8 @@ public class LevelManager : MonoBehaviour
         
     }
 
+    public void LoadScene(string scene) => SceneManager.LoadScene(scene);
+
     private void GetLevel() {
 
         string _level = (SaveData.Has(SaveData.Level)) ? SaveData.Level : "1";
