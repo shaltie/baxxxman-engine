@@ -48,7 +48,7 @@ public class GuardinScatter : GuardinBehavior
     {
         _node = other.GetComponent<Node>();
 
-        if (_node.IsObstacle == false)
+        if (_node == null || _node.IsObstacle == false)
             return;
 
         // Debug.Log("Scatter: Guardin mode = " + SaveData.GetString(SaveData.GuardinMode));

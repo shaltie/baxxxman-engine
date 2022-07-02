@@ -40,7 +40,7 @@ public class GuardinChase : GuardinBehavior
     {
         Node node = other.GetComponent<Node>();
 
-        if (node.IsObstacle == false)
+        if (node == null || node.IsObstacle == false)
             return;
 
         string guardinMode = SaveData.GetString(SaveData.GuardinMode);
