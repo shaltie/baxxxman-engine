@@ -28,15 +28,15 @@ public class Node : MonoBehaviour
 
     private void Update()
     {
-        //if (_isObstacle)
-        //{
-        //    availableDirections = new List<Vector2>();
+        if (_isObstacle == false)
+        {
+            availableDirections = new List<Vector2>();
 
-        //    CheckAvailableDirection(Vector2.up);
-        //    CheckAvailableDirection(Vector2.down);
-        //    CheckAvailableDirection(Vector2.left);
-        //    CheckAvailableDirection(Vector2.right);
-        //}
+            CheckAvailableDirection(Vector2.up);
+            CheckAvailableDirection(Vector2.down);
+            CheckAvailableDirection(Vector2.left);
+            CheckAvailableDirection(Vector2.right);
+        }
     }
 
     private void CheckAvailableDirection(Vector2 direction)

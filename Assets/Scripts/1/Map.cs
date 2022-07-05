@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-    [SerializeField] public List<Guardin> _guardins;
-    [SerializeField] public Transform mapCoins;
+    public List<Guardin> _guardins;
+    public Transform mapCoins;
+    public Transform _wall;
 
     public IReadOnlyList<Guardin> Guardins => _guardins;
+    public Transform Wall => _wall;
 }

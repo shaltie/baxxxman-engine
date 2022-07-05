@@ -30,7 +30,6 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7230101031523444123}
   m_RootOrder: 9
@@ -217,7 +216,6 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.4, y: -8.01, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6147074137218237167}
   - {fileID: 4637488303081627268}
@@ -366,7 +364,6 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7230101031523444123}
   m_RootOrder: 8
@@ -480,7 +477,6 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.05, y: -0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7230101031523444123}
   m_RootOrder: 1
@@ -2502,7 +2498,6 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7230101031523444123}
   m_RootOrder: 6
@@ -2685,7 +2680,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4653724205759971413}
   - {fileID: 108492934506365581}
@@ -2724,7 +2718,6 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7230101031523444123}
   m_RootOrder: 4
@@ -3265,7 +3258,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.21742134, y: 0.82608014, z: 5.153269}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7230101030666056171}
   - {fileID: 7230101030362915231}
@@ -3311,6 +3303,7 @@ MonoBehaviour:
   - {fileID: 2211276807336521716}
   - {fileID: 4326313138940098444}
   mapCoins: {fileID: 7230101032010657795}
+  _wall: {fileID: 7230101030362915231}
 --- !u!114 &7230101031523444121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3354,7 +3347,6 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7230101031523444123}
   m_RootOrder: 5
@@ -3586,7 +3578,6 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7230101031523444123}
   m_RootOrder: 3
@@ -4588,7 +4579,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7230101031523444123}
   m_RootOrder: 7
@@ -4786,7 +4776,6 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7230101031523444123}
   m_RootOrder: 2
@@ -6301,9 +6290,9 @@ PrefabInstance:
       objectReference: {fileID: 6360940148328194326}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
---- !u!4 &108492934506365581 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2648999586671979213, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
+--- !u!212 &9123079252237091716 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6618570267428727748, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
   m_PrefabInstance: {fileID: 2684799213809248320}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6360940148328194326 stripped
@@ -6322,9 +6311,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93fcf1a34c52d41a0ab59c1040aab8ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &9123079252237091716 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6618570267428727748, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
+--- !u!4 &108492934506365581 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2648999586671979213, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
   m_PrefabInstance: {fileID: 2684799213809248320}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5575056953393874548
@@ -6511,6 +6500,11 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 6618570267428727748, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
   m_PrefabInstance: {fileID: 5906255110823624943}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &3239196779031038393 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9008549411848341846, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
+  m_PrefabInstance: {fileID: 5906255110823624943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2211276807336521716 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5712590939233464091, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
@@ -6522,11 +6516,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93fcf1a34c52d41a0ab59c1040aab8ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &3239196779031038393 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9008549411848341846, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
-  m_PrefabInstance: {fileID: 5906255110823624943}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8445402335836318242 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2648999586671979213, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
@@ -6711,11 +6700,6 @@ PrefabInstance:
       objectReference: {fileID: 1824715829368775630}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
---- !u!4 &1824715829368775630 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9008549411848341846, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
-  m_PrefabInstance: {fileID: 7230101032079501976}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3103342594129167747 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5712590939233464091, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
@@ -6727,6 +6711,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93fcf1a34c52d41a0ab59c1040aab8ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1824715829368775630 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9008549411848341846, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
+  m_PrefabInstance: {fileID: 7230101032079501976}
+  m_PrefabAsset: {fileID: 0}
 --- !u!212 &4580046487198990684 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 6618570267428727748, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
@@ -6916,14 +6905,14 @@ PrefabInstance:
       objectReference: {fileID: 1029598237830894017}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
---- !u!4 &1029598237830894017 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9008549411848341846, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
-  m_PrefabInstance: {fileID: 8308320877536155799}
-  m_PrefabAsset: {fileID: 0}
 --- !u!212 &2924233942226449235 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 6618570267428727748, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
+  m_PrefabInstance: {fileID: 8308320877536155799}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1029598237830894017 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9008549411848341846, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
   m_PrefabInstance: {fileID: 8308320877536155799}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &4326313138940098444 stripped

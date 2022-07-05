@@ -44,7 +44,6 @@ public class Hero : MonoBehaviour
     {
         if (collision.collider.TryGetComponent(out Obstacle obstacle))
         {
-            Debug.Log(obstacle.name);
             obstacle.Move(movement.direction, movement.speed);
         }
     }
@@ -53,7 +52,6 @@ public class Hero : MonoBehaviour
     {
         if (collision.collider.TryGetComponent(out Obstacle obstacle))
         {
-            Debug.Log("OnCollisionExit2D: " + obstacle.name);
             obstacle.StopMove();
         }
     }
@@ -69,7 +67,10 @@ public class Hero : MonoBehaviour
             Destroy(cristal.gameObject);
 
             if (_currentCristalCount == _maxCristalCount)
+            {
                 FindObjectOfType<PortalControl>().Show();
+                FindObjectOfType<GameManager>().HideRandomWall();
+            }
         }
 
         if (collision.TryGetComponent(out Portal portal))
@@ -78,22 +79,22 @@ public class Hero : MonoBehaviour
 
     private void Update()
     {
-        // Set the new direction based on the current input
+        // Set the new direction based on the current inputaaa
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            movement.SetDirection(Vector2.up, rotation: Quaternion.Euler(0f, 0f, 270f), isPlayerRotate: true);
+            movement.SetDirection(Vector2.up, Quaternion.Euler(0f, 0f, 270f), true);
         }
         else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
-            movement.SetDirection(Vector2.down, rotation: Quaternion.Euler(0f, 0f, 90f), isPlayerRotate: true);
+            movement.SetDirection(Vector2.down, Quaternion.Euler(0f, 0f, 90f), true);
         }
         else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            movement.SetDirection(Vector2.left, rotation: Quaternion.Euler(0f, 0f, 0f), isPlayerRotate: true);
+            movement.SetDirection(Vector2.left, Quaternion.Euler(0f, 0f, 0f), true);
         }
         else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-            movement.SetDirection(Vector2.right, rotation: Quaternion.Euler(0f, 0f, 180f), isPlayerRotate: true);
+            movement.SetDirection(Vector2.right, Quaternion.Euler(0f, 0f, 180f), true);
         }
 
         // Rotate pacman to face the movement direction
@@ -132,19 +133,19 @@ public class Hero : MonoBehaviour
     {
         if (direction == Vector3.up)
         {
-            movement.SetDirection(Vector2.up, rotation: Quaternion.Euler(0, 0, 270), isPlayerRotate: true);
+            movement.SetDirection(Vector2.up, Quaternion.Euler(0, 0, 270), true);
         }
         else if (direction == Vector3.down)
         {
-            movement.SetDirection(Vector2.down, rotation: Quaternion.Euler(0, 0, 90), isPlayerRotate: true);
+            movement.SetDirection(Vector2.down, Quaternion.Euler(0, 0, 90), true);
         }
         else if (direction == Vector3.left)
         {
-            movement.SetDirection(Vector2.left, rotation: Quaternion.Euler(0, 0, 0), isPlayerRotate: true);
+            movement.SetDirection(Vector2.left, Quaternion.Euler(0, 0, 0), true);
         }
         else if (direction == Vector3.right)
         {
-            movement.SetDirection(Vector2.right, rotation: Quaternion.Euler(0, 0, -180), isPlayerRotate: true);
+            movement.SetDirection(Vector2.right, Quaternion.Euler(0, 0, -180), true);
         }
     }
 }

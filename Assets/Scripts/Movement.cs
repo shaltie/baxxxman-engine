@@ -76,13 +76,13 @@ public class Movement : MonoBehaviour
         rigidbody.MovePosition(position + translation);
     }
 
-    public void SetDirection(Vector2 direction, bool forced = false, Quaternion rotation = default(Quaternion), bool isPlayerRotate = false)
+    public void SetDirection(Vector2 direction, Quaternion rotation = default(Quaternion), bool isPlayerRotate = false)
     {
         // Only set the direction if the tile in that direction is available
         // otherwise we set it as the next direction so it'll automatically be
         // set when it does become available
 
-        if (forced || !Occupied(direction))
+        if (!Occupied(direction))
         {
             if(direction != Vector2.zero)
                 this.direction = direction;
@@ -94,8 +94,11 @@ public class Movement : MonoBehaviour
             nextDirection = direction;
         }
 
-        if(isPlayerRotate == false)
-            _target.transform.rotation = GetRotation(direction);
+        if (isPlayerRotate == false)
+        {
+            if(_target != null)
+                _target.transform.rotation = GetRotation(direction);
+        }
     }
 
     public bool Occupied(Vector2 direction)

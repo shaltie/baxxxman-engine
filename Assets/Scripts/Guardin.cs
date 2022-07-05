@@ -33,30 +33,31 @@ public class Guardin : MonoBehaviour
         ResetState();
     }
 
-    public void Follow(Transform target)
+    public void SetGuardinMode(string mode)
+    {
+        SaveData.Save(SaveData.GuardinMode, mode);
+    }
+
+    public void Follow(Transform target, bool isObstacle = false)
     {
         _isFollow = true;
         this.target = target;
 
-        // chase.Enable();
-        // scatter.Disable();
+        IsObstacle = isObstacle;
     }
+
+    public bool IsObstacle { get; private set; }
 
     public void StopFollow()
     {
-        this.target = null;
-
-        // chase.Disable();
-        // scatter.Enable();
         _isFollow = false;
+        this.target = null;
     }
 
     public void ResetState()
     {
         gameObject.SetActive(true);
         movement.ResetState();
-        // chase.Disable();
-        // scatter.Enable();
     }
 
     public void SetPosition(Vector3 position)

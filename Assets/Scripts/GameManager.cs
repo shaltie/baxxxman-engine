@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _nextSpeed;
     [SerializeField] private int _nextHealthCount;
     [SerializeField] private LevelManager _levelManager;
+    [SerializeField] private GameObject _obstacle;
+
+    private Transform _wall;
 
     public int LiveCount = 3;
 
@@ -34,8 +37,6 @@ public class GameManager : MonoBehaviour
     public float NextSpeed => _nextSpeed;
     public int NextHealthCount => _nextHealthCount;
 
-    private void Awake() {}
-
     private void Start()
     {
         SetupLevel();
@@ -47,21 +48,26 @@ public class GameManager : MonoBehaviour
 
     private void SetupLevel()
     {
-
         int localLevel = 0; // Now al scenes must have only 1 level in _maps; @TODO add multiple local levels logic
-
-        
-        
         Map mapScript = _maps[localLevel].GetComponent<Map>();
+        _wall = _maps[localLevel].Wall;
         Transform mapCoins = mapScript.mapCoins;
 
         foreach (Transform coin in mapCoins)
-        {
             coin.gameObject.SetActive(true);
-        }
 
         guardins = _maps[localLevel].Guardins.ToArray();
-        
+    }
+
+    public void HideRandomWall()
+    {
+        List<GameObject> walls = new List<GameObject>();
+
+        foreach (Transform wall in _wall)
+            walls.Add(wall.gameObject);
+
+        int randomIndex = Random.Range(0, walls.Count);
+        walls[randomIndex].SetActive(false);
     }
 
     public void SaveNextLevel()
@@ -98,6 +104,11 @@ public class GameManager : MonoBehaviour
 
         foreach (var guardin in guardins)
             guardin.StopFollow();
+    }
+
+    public void HideObstacle()
+    {
+        _obstacle.SetActive(false);
     }
 
     private bool IsFollow()
