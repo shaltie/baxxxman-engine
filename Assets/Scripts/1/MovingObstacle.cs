@@ -6,6 +6,8 @@ public class MovingObstacle : MonoBehaviour
 {
     [SerializeField] private Transform _targetStart;
     [SerializeField] private Transform _targetEnd;
+    [SerializeField] private Transform _targetRotate;
+    [SerializeField] private float _speedRotate;
 
     private Guardin _guardin;
 
@@ -17,6 +19,11 @@ public class MovingObstacle : MonoBehaviour
     private void Start()
     {
         _guardin.Follow(_targetStart, true);
+    }
+
+    private void Update()
+    {
+        _targetRotate.Rotate(new Vector3(0, 0, _speedRotate));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -15,7 +15,11 @@ public class GuardinChase : GuardinBehavior
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        //GenerateNewPath(other);
+        string guardinMode = SaveData.GetString(SaveData.GuardinMode);
+        bool isChase = guardinMode == "chase";
+
+        if (_tempDirection == Vector2.zero && isChase == false)
+            GenerateNewPath(other);
     }
 
     private void GenerateNewPath(Collider2D other)
@@ -27,7 +31,9 @@ public class GuardinChase : GuardinBehavior
 
         string guardinMode = SaveData.GetString(SaveData.GuardinMode);
 
-        if (guardinMode == "chase" || _isObstacle)
+        bool isChase = guardinMode == "chase";
+
+        if (isChase || _isObstacle)
         {
             Vector2 direction = Vector2.zero;
             float minDistance = float.MaxValue;
@@ -51,12 +57,15 @@ public class GuardinChase : GuardinBehavior
                 }
             }
 
-            if (_isObstacle == false && node.availableDirections.Count >= 2)
+            if (isChase == false)
             {
-                if (_tempDirection == direction)
-                    direction = GetNewDirection(node.availableDirections, direction);
+                if (_isObstacle == false && node.availableDirections.Count >= 2)
+                {
+                    if (_tempDirection == direction)
+                        direction = GetNewDirection(node.availableDirections, direction);
 
-                _tempDirection = guardin.movement.direction;
+                    _tempDirection = guardin.movement.direction;
+                }
             }
 
             guardin.movement.SetDirection(direction);

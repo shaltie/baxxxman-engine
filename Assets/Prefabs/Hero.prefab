@@ -33,7 +33,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 1.5, y: -7.5, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -126,7 +125,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.45
 --- !u!114 &7514316973266910017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _guardinScatter: {fileID: 0}
   _target: {fileID: 7514316973266910020}
-  _accelerateSpeed: 2
+  _accelerateSpeed: 1.5
   _duration: 0.5
   speed: 3
   speedMultiplier: 1

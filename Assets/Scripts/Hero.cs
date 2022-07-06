@@ -63,18 +63,27 @@ public class Hero : MonoBehaviour
 
         if (collision.TryGetComponent(out Cristal cristal))
         {
+            cristal.HideWall();
+
             _currentCristalCount++;
             Destroy(cristal.gameObject);
 
             if (_currentCristalCount == _maxCristalCount)
             {
                 FindObjectOfType<PortalControl>().Show();
-                FindObjectOfType<GameManager>().HideRandomWall();
             }
         }
 
         if (collision.TryGetComponent(out Portal portal))
             FindObjectOfType<GameManager>().Win();
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out Node node))
+        {
+            Debug.Log(Vector2.Distance(transform.position, node.transform.position));
+        }
     }
 
     private void Update()

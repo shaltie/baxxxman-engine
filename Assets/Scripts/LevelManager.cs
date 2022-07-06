@@ -7,28 +7,33 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     string levelName = "Scenes/Level";
-    public int Level {get; private set;}
+    public int Level;//{get; private set;}
 
-    void Awake() {
+    void Awake()
+    {
 
         GetLevel();
-        
+
     }
 
     public void LoadScene(string scene) => SceneManager.LoadScene(scene);
 
-    private void GetLevel() {
-
+    private void GetLevel()
+    {
         string _level = (SaveData.Has(SaveData.Level)) ? SaveData.Level : "1";
-        
-        if (Int32.TryParse(_level, out int j)){
+
+        if (Int32.TryParse(SaveData.GetString(_level), out int j))
+        {
             Level = j;
-        } else {
+        }
+        else
+        {
             Level = 1;
         }
     }
 
-    public void SetNextLevelAsActual() {
+    public void SetNextLevelAsActual()
+    {
         Level++;
         SaveData.Save(SaveData.Level, Level.ToString());
     }
@@ -37,17 +42,19 @@ public class LevelManager : MonoBehaviour
     * Get current level from SaveData or 1 
     * and load Scene with this level;
     */
-    public void LoadActualLevel() {
+    public void LoadActualLevel()
+    {
         string _level = levelName + Level.ToString();
+
         SceneManager.LoadScene(_level);
         return;
-        if(SceneManager.GetSceneByName(_level).IsValid()){
-            Debug.Log("LoadActualLevel: Load <" + _level + "> Scene");
-            SceneManager.LoadScene(_level);
-        } else {
-            Debug.Log("LoadActualLevel: No <" + _level + "> Scene Found");
-            SceneManager.LoadScene(levelName + "1");
-        }
+        //if(SceneManager.GetSceneByName(_level).IsValid()){
+        //    Debug.Log("LoadActualLevel: Load <" + _level + "> Scene");
+        //    SceneManager.LoadScene(_level);
+        //} else {
+        //    Debug.Log("LoadActualLevel: No <" + _level + "> Scene Found");
+        //    SceneManager.LoadScene(levelName + "1");
+        //}
     }
 
     // public void LoadLevel(int level) {

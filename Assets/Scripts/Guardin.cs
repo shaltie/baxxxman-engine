@@ -43,6 +43,9 @@ public class Guardin : MonoBehaviour
         _isFollow = true;
         this.target = target;
 
+        if(isObstacle == false)
+            movement.Sprite.color = Color.red;
+
         IsObstacle = isObstacle;
     }
 
@@ -52,6 +55,7 @@ public class Guardin : MonoBehaviour
     {
         _isFollow = false;
         this.target = null;
+        movement.Sprite.color = Color.white;
     }
 
     public void ResetState()

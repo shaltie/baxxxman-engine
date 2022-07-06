@@ -8,7 +8,6 @@ using System.Linq;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private ResultWindow _result;
-    [SerializeField] private List<Map> _maps;
     [SerializeField] private float _nextSpeed;
     [SerializeField] private int _nextHealthCount;
     [SerializeField] private LevelManager _levelManager;
@@ -48,26 +47,25 @@ public class GameManager : MonoBehaviour
 
     private void SetupLevel()
     {
-        int localLevel = 0; // Now al scenes must have only 1 level in _maps; @TODO add multiple local levels logic
-        Map mapScript = _maps[localLevel].GetComponent<Map>();
-        _wall = _maps[localLevel].Wall;
+        //int localLevel = 0; // Now al scenes must have only 1 level in _maps; @TODO add multiple local levels logic
+        Map mapScript = FindObjectOfType<Map>().GetComponent<Map>();
+        _wall = mapScript.Wall;
         Transform mapCoins = mapScript.mapCoins;
 
         foreach (Transform coin in mapCoins)
             coin.gameObject.SetActive(true);
 
-        guardins = _maps[localLevel].Guardins.ToArray();
+        guardins = mapScript.Guardins.ToArray();
     }
 
-    public void HideRandomWall()
+    private IReadOnlyList<Wall> GetWalls()
     {
-        List<GameObject> walls = new List<GameObject>();
+        List<Wall> walls = new List<Wall>();
 
         foreach (Transform wall in _wall)
-            walls.Add(wall.gameObject);
+            walls.Add(wall.GetComponent<Wall>());
 
-        int randomIndex = Random.Range(0, walls.Count);
-        walls[randomIndex].SetActive(false);
+        return walls;
     }
 
     public void SaveNextLevel()

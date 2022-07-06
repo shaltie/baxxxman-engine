@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pyramid9
       objectReference: {fileID: 0}
+    - target: {fileID: 7230101031604697871, guid: 0f16ad7aedaf84e47aad5d02a58dfdef, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f16ad7aedaf84e47aad5d02a58dfdef, type: 3}
 --- !u!114 &1579561829 stripped
@@ -204,6 +208,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3973579384120843183, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973579384191905800, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3973579384191905846, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
@@ -393,6 +401,10 @@ PrefabInstance:
     - target: {fileID: 6013017923279392099, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
       propertyPath: m_LocalPosition.y
       value: -2.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 8039083293393222985, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8368115672525645823, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
       propertyPath: m_Enabled

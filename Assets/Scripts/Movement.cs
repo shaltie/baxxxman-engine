@@ -20,6 +20,7 @@ public class Movement : MonoBehaviour
     };
     private bool _isAccelerate = false;
 
+    public SpriteRenderer Sprite => _target;
     public float speed = 8f;
     public float speedMultiplier = 1f;
     public Vector2 initialDirection;
