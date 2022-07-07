@@ -6,13 +6,25 @@ public class Node : MonoBehaviour
 {
     [SerializeField] private bool _isObstacle;
 
+    private readonly List<Vector2> _directions = new List<Vector2>()
+    {
+        new Vector2(1, 1),
+        new Vector2(-1, 1),
+        new Vector2(1, -1),
+        new Vector2(-1, -1),
+    };
+
     public LayerMask obstacleLayer;
     public List<Vector2> availableDirections;// { get; private set; }
 
     public bool IsObstacle => _isObstacle;
 
+    public bool IsBesideFire { get; private set; }
+
     private void Start()
     {
+        IsBesideFire = ExistBesideFire();
+
         if (_isObstacle)
             return;
 
@@ -62,5 +74,21 @@ public class Node : MonoBehaviour
                 availableDirections.Add(direction);
             }
         }
+    }
+
+    private bool ExistBesideFire()
+    {
+        foreach (var direction in _directions)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1.5f, obstacleLayer);
+
+            if (hit)
+            {
+                if (hit.collider.TryGetComponent(out Fire fire))
+                    return true;
+            }
+        }
+
+        return false;
     }
 }

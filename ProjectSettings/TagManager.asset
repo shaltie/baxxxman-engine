@@ -8,14 +8,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - NodeObject
   - Water
   - UI
   - Baxxxman
   - Guard
   - Money
   - Obstacle
-  - NodeObject
+  - 
   - Fire
   - Door
   - ObstacleObject

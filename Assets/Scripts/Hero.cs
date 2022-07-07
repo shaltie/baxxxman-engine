@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Movement))]
@@ -7,9 +8,21 @@ public class Hero : MonoBehaviour
     [SerializeField] private EnemyType _enemyType;
     [SerializeField] private SwipeControl _swipeControl;
     [SerializeField] private int _maxCristalCount;
+    [SerializeField] private float _minDistanceRotate;
     [SerializeField] private Bite _biteTemplate;
 
+    private readonly Dictionary<Vector2, Quaternion> _directions = new Dictionary<Vector2, Quaternion>()
+    {
+        { Vector2.up, Quaternion.Euler(0f, 0f, 270f) },
+        { Vector2.down, Quaternion.Euler(0f, 0f, 90f) },
+        { Vector2.left, Quaternion.Euler(0f, 0f, 0f) },
+        { Vector2.right, Quaternion.Euler(0f, 0f, 180f) }
+    };
+
+    private bool _isBesideFire = false;
     private int _currentCristalCount;
+    private Vector2 _direction;
+    private float _distance;
 
     public AnimatedSprite deathSequence;
     public SpriteRenderer spriteRenderer { get; private set; }
@@ -82,28 +95,43 @@ public class Hero : MonoBehaviour
     {
         if (collision.TryGetComponent(out Node node))
         {
-            Debug.Log(Vector2.Distance(transform.position, node.transform.position));
+            if (node.IsBesideFire)
+            {
+                _isBesideFire = node.IsBesideFire;
+                _distance = Vector2.Distance(transform.position, node.transform.position);
+            }
         }
     }
 
     private void Update()
     {
-        // Set the new direction based on the current inputaaa
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            movement.SetDirection(Vector2.up, Quaternion.Euler(0f, 0f, 270f), true);
+            _direction = Vector2.up;
         }
         else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
-            movement.SetDirection(Vector2.down, Quaternion.Euler(0f, 0f, 90f), true);
+            _direction = Vector2.down;
         }
         else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            movement.SetDirection(Vector2.left, Quaternion.Euler(0f, 0f, 0f), true);
+            _direction = Vector2.left;
         }
         else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-            movement.SetDirection(Vector2.right, Quaternion.Euler(0f, 0f, 180f), true);
+            _direction = Vector2.right;
+        }
+
+        if (_isBesideFire)
+        {
+            if (_distance <= _minDistanceRotate)
+            {
+                movement.SetDirection(_direction, GetRotation(_direction), true);
+            }
+        }
+        else
+        {
+            movement.SetDirection(_direction, GetRotation(_direction), true);
         }
 
         // Rotate pacman to face the movement direction
@@ -142,19 +170,31 @@ public class Hero : MonoBehaviour
     {
         if (direction == Vector3.up)
         {
-            movement.SetDirection(Vector2.up, Quaternion.Euler(0, 0, 270), true);
+            _direction = Vector2.up;
+            //movement.SetDirection(Vector2.up, Quaternion.Euler(0, 0, 270), true);
         }
         else if (direction == Vector3.down)
         {
-            movement.SetDirection(Vector2.down, Quaternion.Euler(0, 0, 90), true);
+            _direction = Vector2.down;
+            //movement.SetDirection(Vector2.down, Quaternion.Euler(0, 0, 90), true);
         }
         else if (direction == Vector3.left)
         {
-            movement.SetDirection(Vector2.left, Quaternion.Euler(0, 0, 0), true);
+            _direction = Vector2.left;
+            //movement.SetDirection(Vector2.left, Quaternion.Euler(0, 0, 0), true);
         }
         else if (direction == Vector3.right)
         {
-            movement.SetDirection(Vector2.right, Quaternion.Euler(0, 0, -180), true);
+            _direction = Vector2.right;
+            //movement.SetDirection(Vector2.right, Quaternion.Euler(0, 0, -180), true);
         }
+    }
+
+    private Quaternion GetRotation(Vector2 direction)
+    {
+        if (direction == Vector2.zero)
+            return Quaternion.identity;
+
+        return _directions[direction];
     }
 }

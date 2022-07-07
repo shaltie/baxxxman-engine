@@ -125,7 +125,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.45
+  m_Radius: 0.4
 --- !u!114 &7514316973266910017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +141,7 @@ MonoBehaviour:
   _enemyType: 1
   _swipeControl: {fileID: 7514316973266910024}
   _maxCristalCount: 5
+  _minDistanceRotate: 0.1
   _biteTemplate: {fileID: 4675836171484665925, guid: b36f16409a8474f46a3af3b8e8833464, type: 3}
   deathSequence: {fileID: 7514316973266910026}
 --- !u!114 &7514316973266910026
@@ -182,9 +183,8 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 512
-  doorLayer:
-    serializedVersion: 2
-    m_Bits: 4096
+  direction: {x: 0, y: 0}
+  nextDirection: {x: 0, y: 0}
 --- !u!114 &7514316973266910024
 MonoBehaviour:
   m_ObjectHideFlags: 0

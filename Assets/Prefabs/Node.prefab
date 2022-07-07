@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3851692873145066042}
   - component: {fileID: 5105246698050179457}
   - component: {fileID: -8714188459119650187}
-  m_Layer: 10
+  m_Layer: 3
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,5 +73,5 @@ MonoBehaviour:
   _isObstacle: 0
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 12800
+    m_Bits: 14848
   availableDirections: []
