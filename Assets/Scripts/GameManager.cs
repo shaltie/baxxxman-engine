@@ -106,6 +106,9 @@ public class GameManager : MonoBehaviour
 
     public void HideObstacle()
     {
+        if (_obstacle == null)
+            return;
+
         _obstacle.SetActive(false);
     }
 

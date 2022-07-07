@@ -30,7 +30,6 @@ public class GuardinChase : GuardinBehavior
             return;
 
         string guardinMode = SaveData.GetString(SaveData.GuardinMode);
-
         bool isChase = guardinMode == "chase";
 
         if (isChase || _isObstacle)

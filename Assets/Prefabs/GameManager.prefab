@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _result: {fileID: 0}
-  _maps: []
   _nextSpeed: 0.5
   _nextHealthCount: 1
   _levelManager: {fileID: 0}
@@ -120,6 +119,18 @@ MonoBehaviour:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ShopControl, Assembly-CSharp
         m_MethodName: UpdateGems
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 9017394085483622554}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: HideAllGuardin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

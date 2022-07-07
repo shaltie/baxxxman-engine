@@ -33,7 +33,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8204129931893543080}
   - {fileID: 4533566544764646794}
@@ -98,10 +97,9 @@ MonoBehaviour:
   initialDirection: {x: -1, y: 0}
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 512
-  doorLayer:
-    serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8704
+  direction: {x: 0, y: 0}
+  nextDirection: {x: 0, y: 0}
 --- !u!114 &4870946943436355301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  initialBehavior: {fileID: 2648373311867995754}
   target: {fileID: 0}
   points: 200
 --- !u!114 &2648373311867995754
@@ -154,6 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10151ab47f4bf43a29caeb5e8cad0123, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isObstacle: 0
+  _tempDirection: {x: 0, y: 0}
 --- !u!1 &3330783314295739114
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +181,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2890471310080684851}
   m_RootOrder: 0
@@ -283,7 +281,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2890471310080684851}
   m_RootOrder: 1
