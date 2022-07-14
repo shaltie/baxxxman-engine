@@ -8,7 +8,6 @@ public class Hero : MonoBehaviour
     [SerializeField] private EnemyType _enemyType;
     [SerializeField] private SwipeControl _swipeControl;
     [SerializeField] private int _maxCristalCount;
-    [SerializeField] private float _minDistanceRotate;
     [SerializeField] private Bite _biteTemplate;
 
     private readonly Dictionary<Vector2, Quaternion> _directions = new Dictionary<Vector2, Quaternion>()
@@ -18,11 +17,8 @@ public class Hero : MonoBehaviour
         { Vector2.left, Quaternion.Euler(0f, 0f, 0f) },
         { Vector2.right, Quaternion.Euler(0f, 0f, 180f) }
     };
-
-    private bool _isBesideFire = false;
     private int _currentCristalCount;
     private Vector2 _direction;
-    private float _distance;
 
     public AnimatedSprite deathSequence;
     public SpriteRenderer spriteRenderer { get; private set; }
@@ -91,18 +87,6 @@ public class Hero : MonoBehaviour
             FindObjectOfType<GameManager>().Win();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out Node node))
-        {
-            if (node.IsBesideFire)
-            {
-                _isBesideFire = node.IsBesideFire;
-                _distance = Vector2.Distance(transform.position, node.transform.position);
-            }
-        }
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
@@ -122,17 +106,7 @@ public class Hero : MonoBehaviour
             _direction = Vector2.right;
         }
 
-        if (_isBesideFire)
-        {
-            if (_distance <= _minDistanceRotate)
-            {
-                movement.SetDirection(_direction, GetRotation(_direction), true);
-            }
-        }
-        else
-        {
-            movement.SetDirection(_direction, GetRotation(_direction), true);
-        }
+        movement.SetDirection(_direction, GetRotation(_direction), true);
 
         // Rotate pacman to face the movement direction
         float angle = Mathf.Atan2(movement.direction.y, movement.direction.x);
