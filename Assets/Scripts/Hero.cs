@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Movement))]
 public class Hero : MonoBehaviour
@@ -9,6 +11,11 @@ public class Hero : MonoBehaviour
     [SerializeField] private SwipeControl _swipeControl;
     [SerializeField] private int _maxCristalCount;
     [SerializeField] private Bite _biteTemplate;
+    [SerializeField] private float _startAnimationTime;
+    [SerializeField] private AnimationCurve _animationCurve;
+    [SerializeField] private SpriteRenderer _shieldRenderer;
+    [SerializeField] private float _speedRotate;
+    [SerializeField] private LayerMask _obstacleLayer;
 
     private readonly Dictionary<Vector2, Quaternion> _directions = new Dictionary<Vector2, Quaternion>()
     {
@@ -17,26 +24,32 @@ public class Hero : MonoBehaviour
         { Vector2.left, Quaternion.Euler(0f, 0f, 0f) },
         { Vector2.right, Quaternion.Euler(0f, 0f, 180f) }
     };
+    private GameManager _manager;
     private int _currentCristalCount;
     private Vector2 _direction;
+    private float _expiredTime;
+    private float _duration = 4;
+    private bool _isPlayAnimation = false;
+    private bool _isStartPlayAnimation = true;
 
     public AnimatedSprite deathSequence;
     public SpriteRenderer spriteRenderer { get; private set; }
     public Collider2D collider { get; private set; }
     public Movement movement { get; private set; }
     public EnemyType EnemyType => _enemyType;
+    private bool _isUseShield = false;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         collider = GetComponent<Collider2D>();
         movement = GetComponent<Movement>();
+        _manager = FindObjectOfType<GameManager>();
     }
 
     private void Start()
     {
-        if (SaveData.Has(SaveData.Speed))
-            movement.speed = SaveData.GetFloat(SaveData.Speed);
+        _nextPosition = transform.position;
     }
 
     private void OnEnable()
@@ -85,7 +98,16 @@ public class Hero : MonoBehaviour
 
         if (collision.TryGetComponent(out Portal portal))
             FindObjectOfType<GameManager>().Win();
+
+        if (collision.TryGetComponent(out Shield shield))
+        {
+            FindObjectOfType<GameManager>().PlayShield();
+            Destroy(shield.gameObject);
+        }
     }
+
+    [SerializeField] private Vector2 _nextPosition;
+    [SerializeField] private bool _isNextMove = false;
 
     private void Update()
     {
@@ -106,11 +128,91 @@ public class Hero : MonoBehaviour
             _direction = Vector2.right;
         }
 
-        movement.SetDirection(_direction, GetRotation(_direction), true);
+        TryPlayFirstAnimationShield();
+        TryPlayAnimationShield();
+
+        if (_direction == Vector2.zero)
+            return;
+
+        Debug.DrawLine(transform.position, _nextPosition, Color.red);
+
+        float distance = Vector2.Distance(transform.position, _nextPosition);
+
+        if (distance < 0.1f)
+        {
+            if (CheckAvailableDirection(_direction) == false)
+            {
+                if(_direction != movement.direction)
+                    _nextPosition += movement.direction;
+
+                return;
+            }
+
+            Debug.Log(CheckAvailableDirection(_direction));
+            _nextPosition += _direction;
+            movement.SetDirection(_direction, GetRotation(_direction), true);
+        }
 
         // Rotate pacman to face the movement direction
         float angle = Mathf.Atan2(movement.direction.y, movement.direction.x);
         transform.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg * (-1), Vector3.forward * (-1));
+    }
+
+    private bool CheckAvailableDirection(Vector2 direction)
+    {
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position, Vector2.one * 0.5f, 0f, direction, 1f, _obstacleLayer);
+        return hit.collider == null;
+    }
+
+    private void TryPlayFirstAnimationShield()
+    {
+        bool isMove = _direction != Vector2.zero;
+
+        Debug.Log(isMove);
+
+        if (isMove == false)
+            _isUseShield = true;
+
+        if (isMove && _isStartPlayAnimation)
+        {
+            _manager.PlayShield(_startAnimationTime);
+            PlayShieldAnimation(_startAnimationTime, () => _isUseShield = false);
+            _isStartPlayAnimation = false;
+        }
+    }
+
+    private void TryPlayAnimationShield()
+    {
+        _shieldRenderer.enabled = _isPlayAnimation;
+
+        if (_isPlayAnimation)
+        {
+            _expiredTime += Time.deltaTime;
+
+            if (_expiredTime > _duration)
+                _expiredTime = 0;
+
+            float progress = _expiredTime / _duration;
+            spriteRenderer.color = new Color(1, 1, 1, _animationCurve.Evaluate(progress));
+
+            _shieldRenderer.transform.Rotate(0, 0, Time.deltaTime * _speedRotate);
+        }
+        else
+        {
+            spriteRenderer.color = Color.white;
+        }
+    }
+
+    public bool IsUseShield()
+    {
+        Debug.Log(_manager.IsPlayShield + "__" + _isUseShield);
+
+        return _manager.IsPlayShield || _isUseShield;
+    }
+
+    public void PlayShieldAnimation(float duretion, UnityAction callback = null)
+    {
+        StartCoroutine(WaitPlayAnimationShield(duretion, callback));
     }
 
     public void ResetState()
@@ -122,6 +224,11 @@ public class Hero : MonoBehaviour
         // deathSequence.spriteRenderer.enabled = false;
         movement.ResetState();
         gameObject.SetActive(true);
+
+        _nextPosition = transform.position;
+        _direction = Vector2.zero;
+        _expiredTime = 0;
+        _isStartPlayAnimation = true;
     }
 
     public void DeathSequence()
@@ -145,22 +252,18 @@ public class Hero : MonoBehaviour
         if (direction == Vector3.up)
         {
             _direction = Vector2.up;
-            //movement.SetDirection(Vector2.up, Quaternion.Euler(0, 0, 270), true);
         }
         else if (direction == Vector3.down)
         {
             _direction = Vector2.down;
-            //movement.SetDirection(Vector2.down, Quaternion.Euler(0, 0, 90), true);
         }
         else if (direction == Vector3.left)
         {
             _direction = Vector2.left;
-            //movement.SetDirection(Vector2.left, Quaternion.Euler(0, 0, 0), true);
         }
         else if (direction == Vector3.right)
         {
             _direction = Vector2.right;
-            //movement.SetDirection(Vector2.right, Quaternion.Euler(0, 0, -180), true);
         }
     }
 
@@ -170,5 +273,13 @@ public class Hero : MonoBehaviour
             return Quaternion.identity;
 
         return _directions[direction];
+    }
+
+    private IEnumerator WaitPlayAnimationShield(float duration, UnityAction callback = null)
+    {
+        _isPlayAnimation = true;
+        yield return new WaitForSeconds(duration);
+        _isPlayAnimation = false;
+        callback?.Invoke();
     }
 }

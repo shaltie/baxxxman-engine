@@ -12,6 +12,7 @@ public class ShopControl : MonoBehaviour
 
     private const int _acceleratePrice = 50;
     private const int _bitePrice = 50;
+    private const int _shieldPrice = 50;
     private bool _isNextWindow = false;
 
     private void Start()
@@ -45,6 +46,11 @@ public class ShopControl : MonoBehaviour
     public void TryBuyBite()
     {
         TryBuy(SaveData.Bite, _bitePrice, UpdateGems);
+    }
+
+    public void TryBuyShield()
+    {
+        TryBuy(SaveData.Shield, _shieldPrice, UpdateGems);
     }
 
     public void BuyGems(int value)

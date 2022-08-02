@@ -12,8 +12,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _nextHealthCount;
     [SerializeField] private LevelManager _levelManager;
     [SerializeField] private GameObject _obstacle;
+    [SerializeField] private UnityEvent _winGame;
+    [SerializeField] private UnityEvent _gameOver;
 
+    private const float _playShieldTime = 10;
     private Transform _wall;
+    private Coroutine _shieldPlayJob;
 
     public int LiveCount = 3;
 
@@ -24,9 +28,8 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public Text livesText;
 
-    [SerializeField] private UnityEvent _winGame;
-    [SerializeField] private UnityEvent _gameOver;
 
+    public bool IsPlayShield { get; private set; } = false;
     public int guardinMultiplier { get; private set; } = 1;
 
     public int Count  { get; private set; }
@@ -58,16 +61,6 @@ public class GameManager : MonoBehaviour
         guardins = mapScript.Guardins.ToArray();
     }
 
-    private IReadOnlyList<Wall> GetWalls()
-    {
-        List<Wall> walls = new List<Wall>();
-
-        foreach (Transform wall in _wall)
-            walls.Add(wall.GetComponent<Wall>());
-
-        return walls;
-    }
-
     public void SaveNextLevel()
     {
         _levelManager.LoadActualLevel();
@@ -94,6 +87,23 @@ public class GameManager : MonoBehaviour
             foreach (var guardin in guardins)
                 guardin.Follow(bite);
         }
+    }
+
+    public void UseShield()
+    {
+        if (TrySpendBoost(SaveData.Shield) && IsPlayShield == false)
+            PlayShield(_playShieldTime);
+    }
+
+    public void PlayShield(float duration = _playShieldTime)
+    {
+        if (_shieldPlayJob != null)
+        {
+            StopCoroutine(_shieldPlayJob);
+            _shieldPlayJob = null;
+        }
+
+        _shieldPlayJob = StartCoroutine(WaitPlayShield(duration));
     }
 
     public void StopBite()
@@ -132,19 +142,11 @@ public class GameManager : MonoBehaviour
     private void NewGame()
     {
         SetScore(0);
-        SetLives(GetLive());
+        SetLives(LiveCount);
         NewRound();
 
         _result.ShowResult();
         Invoke(nameof(SetMaxBax), 0.1f);
-    }
-
-    private int GetLive()
-    {
-        if (SaveData.Has(SaveData.Health))
-            return SaveData.GetInt(SaveData.Health);
-
-        return LiveCount;
     }
 
     private void SetMaxBax()
@@ -210,6 +212,9 @@ public class GameManager : MonoBehaviour
 
     public void HeroCaught()
     {
+        if (hero.IsUseShield())
+            return;
+
         this.hero.DeathSequence();
 
         SetLives(this.lives - 1);
@@ -259,10 +264,6 @@ public class GameManager : MonoBehaviour
         this.guardinMultiplier = 1;
     }
 
-    
-
-    
-
     private bool TrySpendBoost(string key)
     {
         if (SaveData.Has(key))
@@ -278,5 +279,24 @@ public class GameManager : MonoBehaviour
 
     public void SetGuardinMode(string mode) {
         SaveData.Save(SaveData.GuardinMode, mode);
+    }
+
+    private IEnumerator WaitPlayShield(float duration)
+    {
+        int shieldCount = SaveData.GetInt(SaveData.Shield) - 1;
+        SaveData.Save(SaveData.Shield, shieldCount);
+        _result.ShowResult();
+
+        hero.PlayShieldAnimation(duration);
+
+        IsPlayShield = true;
+        foreach (var guardin in guardins)
+            guardin.Collider.isTrigger = true;
+
+        yield return new WaitForSeconds(duration);
+
+        IsPlayShield = false;
+         foreach (var guardin in guardins)
+            guardin.Collider.isTrigger = false;
     }
 }

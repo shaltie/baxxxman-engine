@@ -73,10 +73,22 @@ public class Guardin : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Baxxxman"))
-        {
-            FindObjectOfType<GameManager>().HeroCaught();
-        }
+        SetTrigger(collision.gameObject, true);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        SetTrigger(collision.gameObject, true);
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        SetTrigger(collision.gameObject, false);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        SetTrigger(collision.gameObject, false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -90,6 +102,23 @@ public class Guardin : MonoBehaviour
         {
             FindObjectOfType<GameManager>().StopBite();
             Destroy(bite.gameObject);
+        }
+    }
+
+    private void SetTrigger(GameObject player, bool value)
+    {
+        if (player.layer == LayerMask.NameToLayer("Baxxxman"))
+        {
+            GameManager manager = FindObjectOfType<GameManager>();
+
+            if (manager.hero.IsUseShield())
+            {
+                Collider.isTrigger = value;
+            }
+            else
+            {
+                manager.HeroCaught();
+            }
         }
     }
 }
