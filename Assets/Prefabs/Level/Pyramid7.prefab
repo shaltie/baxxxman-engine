@@ -2442,8 +2442,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _portal: {fileID: 7230101030100040290}
-  _maxRangePosition: {x: -7.5, y: 4.5}
-  _minRangePosition: {x: 6.5, y: -9.5}
+  _maxRangePosition: {x: 6.44, y: 4.5}
+  _minRangePosition: {x: -7.4, y: -9.5}
 --- !u!1 &7230101031595174304
 GameObject:
   m_ObjectHideFlags: 0
@@ -5294,11 +5294,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 995862446914534005, guid: 859882cdfc8f30443bf7d2b9caf7159d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.225049
+      value: -17.58
       objectReference: {fileID: 0}
     - target: {fileID: 995862446914534005, guid: 859882cdfc8f30443bf7d2b9caf7159d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5562697
+      value: -3.8
       objectReference: {fileID: 0}
     - target: {fileID: 995862446914534005, guid: 859882cdfc8f30443bf7d2b9caf7159d, type: 3}
       propertyPath: m_LocalPosition.z

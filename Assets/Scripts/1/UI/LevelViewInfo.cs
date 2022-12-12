@@ -18,7 +18,8 @@ public class LevelViewInfo : MonoBehaviour
 
     private void Awake()
     {
-        _button = GetComponent<Button>();
+        if(GetComponent<Button>()!=null)
+            _button = GetComponent<Button>();
     }
 
     public void Init(Action<int> callback, int level)
@@ -36,6 +37,7 @@ public class LevelViewInfo : MonoBehaviour
 
     public void Hide()
     {
-        _button.interactable = false;
+        if (_button != null)
+            _button.interactable = false;
     }
 }

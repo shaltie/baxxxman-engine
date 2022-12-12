@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 7514316973266910024}
   m_Layer: 6
   m_Name: Hero
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -235,7 +235,24 @@ MonoBehaviour:
     m_RotationOrder: 4
   _shieldRenderer: {fileID: 4773700906824963872}
   _speedRotate: 40
+  _obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _obstacleLayerBox:
+    serializedVersion: 2
+    m_Bits: 0
+  _obstacleLayerGuardBoxer:
+    serializedVersion: 2
+    m_Bits: 0
+  PosPoint: {fileID: 0}
+  _direction: {x: 0, y: 0}
   deathSequence: {fileID: 7514316973266910026}
+  distance: 0
+  PosZero: {x: 0, y: 0}
+  KUB: 0
+  _nextPosition: {x: 0, y: 0}
+  _prewPosition: {x: 0, y: 0}
+  _isNextMove: 0
 --- !u!114 &7514316973266910026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,8 +292,14 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 512
+  obstacleLayerBox:
+    serializedVersion: 2
+    m_Bits: 0
   direction: {x: 0, y: 0}
   nextDirection: {x: 0, y: 0}
+  nextDirection2: {x: 0, y: 0}
+  _Distination: {x: 0, y: 0}
+  PrewPosition: {x: 0, y: 0}
 --- !u!114 &7514316973266910024
 MonoBehaviour:
   m_ObjectHideFlags: 0
