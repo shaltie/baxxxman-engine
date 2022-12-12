@@ -24,9 +24,10 @@ public class Cristal : MonoBehaviour
 
         if (_wall == null && CheckAvailableDirection())
         {
+            Debug.Log("Crystal upd");
             var walls = FindObjectsOfType<Wall>();
 
-            foreach (var wall in walls)
+            foreach (var wall in walls.Reverse())
             {
                 if (wall.IsHide)
                 {
