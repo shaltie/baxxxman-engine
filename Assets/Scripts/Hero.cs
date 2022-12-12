@@ -20,6 +20,7 @@ public class Hero : MonoBehaviour
     public GameObject PosPoint = null;
     Obstacle OBSKUB = null;
     //public bool Kub = false;
+    //FIX FIX FIX
     private readonly Dictionary<Vector2, Quaternion> _directions = new Dictionary<Vector2, Quaternion>()
     {
         { Vector2.up, Quaternion.Euler(0f, 0f, 270f) },
