@@ -5,8 +5,7 @@ using UnityEngine;
 
 public sealed class SaveData
 {
-    public const string Health = nameof(Health);
-    public const string Speed = nameof(Speed);
+    public const string Shield = nameof(Shield);
     public const string Gems = nameof(Gems);
     public const string Bite = nameof(Bite);
     public const string Accelerate = nameof(Accelerate);

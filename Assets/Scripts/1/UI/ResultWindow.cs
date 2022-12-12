@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class ResultWindow : MonoBehaviour
 {
     [SerializeField] private GameManager _gameManager;
@@ -12,38 +12,28 @@ public class ResultWindow : MonoBehaviour
     [SerializeField] private Text _nextLevelText;
     [SerializeField] private Text _accelerateText;
     [SerializeField] private Text _biteText;
+    [SerializeField] private Text _shieldText;
     [SerializeField] private Button _nextLevelButton;
 
-    public void BoostHealth()
+    public void BoostBite()
     {
-        int health = 0;
-
-        if (SaveData.Has(SaveData.Health))
-            health = SaveData.GetInt(SaveData.Health);
-        else
-            health = _gameManager.LiveCount;
-
-        SaveData.Save(SaveData.Health, health + _gameManager.NextHealthCount);
-        _nextLevelButton.interactable = true;
+        SaveBoost(SaveData.Bite);
     }
 
-    public void BoostSpeed()
+    public void BoostAccelerate()
     {
-        float speed = 0;
-
-        if (SaveData.Has(SaveData.Speed))
-            speed = SaveData.GetFloat(SaveData.Speed);
-        else
-            speed = FindObjectOfType<Hero>(true).movement.speed;
-
-        SaveData.Save(SaveData.Speed, speed + _gameManager.NextSpeed);
-        _nextLevelButton.interactable = true;
+        SaveBoost(SaveData.Accelerate);
     }
 
     public void ShowResult()
     {
         foreach (var levelText in _levelText)
             levelText.text = string.Format(levelText.text, SaveData.Level);
+        //Debug.Log("SHOW LEVEL NUMBER =" + SaveData.GetInt(SaveData.Level).ToString());
+       // foreach (var levelText in _levelText)
+        //    levelText.text = string.Format(levelText.text, SaveData.GetInt(SaveData.Level));
+        //     levelText.text = SceneManager.GetActiveScene().name;
+        //     levelText.text = string.Format(levelText.text, SaveData.GetInt(SaveData.Level).ToString());
 
         foreach (var healthText in _healthText)
             healthText.text = "Health Count: " + _gameManager.lives;
@@ -54,5 +44,17 @@ public class ResultWindow : MonoBehaviour
         _nextLevelText.text = string.Format(_nextLevelText.text, SaveData.Level);
         _accelerateText.text = SaveData.GetInt(SaveData.Accelerate).ToString();
         _biteText.text = SaveData.GetInt(SaveData.Bite).ToString();
+        _shieldText.text = SaveData.GetInt(SaveData.Shield).ToString();
+    }
+
+    private void SaveBoost(string key)
+    {
+        int count = 0;
+
+        if (SaveData.Has(key))
+            count = SaveData.GetInt(key);
+
+        SaveData.Save(key, count + 1);
+        _nextLevelButton.interactable = true;
     }
 }
