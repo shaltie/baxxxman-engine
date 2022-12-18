@@ -126,6 +126,8 @@ public class Hero : MonoBehaviour
          /*   _node = node;
             KUB = true;*/
         }
+        if (collision.TryGetComponent(out LavaObstacle lava))
+            FindObjectOfType<GameManager>().HeroCaught();
     }
 
     [SerializeField] public Vector2 _nextPosition;
