@@ -2076,8 +2076,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _portal: {fileID: 7230101030100040290}
-  _maxRangePosition: {x: -5.5, y: 2.5}
-  _minRangePosition: {x: 4.5, y: -7.5}
+  _maxRangePosition: {x: 1.19, y: 10.27}
+  _minRangePosition: {x: -7.2, y: 1.75}
 --- !u!1 &7230101031595174304
 GameObject:
   m_ObjectHideFlags: 0

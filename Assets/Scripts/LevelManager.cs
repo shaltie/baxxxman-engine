@@ -8,10 +8,10 @@ public class LevelManager : MonoBehaviour
 {
     string levelName = "Scenes/Level";
     public int Level;//{get; private set;}
-
+    public int MaxLevel = 9;
     void Awake()
     {
-
+       
         GetLevel();
 
     }
@@ -25,17 +25,30 @@ public class LevelManager : MonoBehaviour
         if (Int32.TryParse(SaveData.GetString(_level), out int j))
         {
             Level = j;
+            
+            return;
         }
         else
         {
             Level = 1;
+           
         }
+       
     }
 
     public void SetNextLevelAsActual()
     {
-        Level++;
-        SaveData.Save(SaveData.Level, Level.ToString());
+        if (Level < MaxLevel)
+        {
+            Level++;
+            SaveData.Save(SaveData.Level, Level.ToString());
+            
+        }
+        else//moe
+        {
+            Level = 1;
+            SaveData.Save(SaveData.Level, Level.ToString());
+        }
     }
 
     /*

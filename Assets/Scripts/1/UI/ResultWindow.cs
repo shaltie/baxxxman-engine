@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class ResultWindow : MonoBehaviour
 {
     [SerializeField] private GameManager _gameManager;
@@ -29,6 +29,11 @@ public class ResultWindow : MonoBehaviour
     {
         foreach (var levelText in _levelText)
             levelText.text = string.Format(levelText.text, SaveData.Level);
+        //Debug.Log("SHOW LEVEL NUMBER =" + SaveData.GetInt(SaveData.Level).ToString());
+       // foreach (var levelText in _levelText)
+        //    levelText.text = string.Format(levelText.text, SaveData.GetInt(SaveData.Level));
+        //     levelText.text = SceneManager.GetActiveScene().name;
+        //     levelText.text = string.Format(levelText.text, SaveData.GetInt(SaveData.Level).ToString());
 
         foreach (var healthText in _healthText)
             healthText.text = "Health Count: " + _gameManager.lives;

@@ -667,6 +667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a1fbffb950a594b8963dcc83a9ca2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waalOK: 0
 --- !u!1 &7230101030100040302
 GameObject:
   m_ObjectHideFlags: 0
@@ -2440,6 +2441,7 @@ MonoBehaviour:
   - {fileID: 3103342594129167747}
   - {fileID: 3103342594850948263}
   mapCoins: {fileID: 7230101032010657795}
+  _wall: {fileID: 0}
 --- !u!114 &7230101031523444121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2453,8 +2455,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _portal: {fileID: 7230101030100040290}
-  _maxRangePosition: {x: -3.5, y: 5.5}
-  _minRangePosition: {x: 2.5, y: -7.5}
+  _maxRangePosition: {x: 1.19, y: 10.27}
+  _minRangePosition: {x: -7.2, y: 1.75}
 --- !u!1 &7230101031595174304
 GameObject:
   m_ObjectHideFlags: 0

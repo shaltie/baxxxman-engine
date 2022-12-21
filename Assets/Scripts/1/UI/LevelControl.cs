@@ -22,10 +22,12 @@ public class LevelControl : MonoBehaviour
         for (int level = 1; level <= _levelCount; level++)
         {
             LevelViewInfo createdTemplate = Instantiate(_template, _target);
-            createdTemplate.Init(level => CurrentLevel = level, level);
+            createdTemplate.Init(level0 => CurrentLevel = level, level);
 
             if (level >= NumberOfPassedLevels)
                 createdTemplate.Hide();
+
+           
         }
     }
 

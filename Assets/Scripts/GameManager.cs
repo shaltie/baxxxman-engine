@@ -14,10 +14,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _obstacle;
     [SerializeField] private UnityEvent _winGame;
     [SerializeField] private UnityEvent _gameOver;
-
-    private const float _playShieldTime = 10;
-    private Transform _wall;
-    private Coroutine _shieldPlayJob;
+   // [SerializeField] private int SHILD_COUNT = 3;
+   // public Text CountShildText = null;
+    [SerializeField] private const float _playShieldTime = 10;
+    [SerializeField] private Transform _wall;
+    [SerializeField] private Coroutine _shieldPlayJob;
 
     public int LiveCount = 3;
 
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
     public Text gameOverText;
     public Text scoreText;
     public Text livesText;
-
+    public int MacShild = 6;
 
     public bool IsPlayShield { get; private set; } = false;
     public int guardinMultiplier { get; private set; } = 1;
@@ -41,9 +42,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+     //   SaveData.Save("Level", 0);
         SetupLevel();
         NewGame();
-
+       // CountShildText.text = SHILD_COUNT.ToString();
         _result.ShowResult();
         Invoke(nameof(SetMaxBax), 0.1f);
     }
@@ -144,7 +146,11 @@ public class GameManager : MonoBehaviour
         SetScore(0);
         SetLives(LiveCount);
         NewRound();
-
+        SetShilds(); //--moe
+        //---
+     //   int Level = 1;
+     //   SaveData.Save(SaveData.Level, Level.ToString());
+        //---
         _result.ShowResult();
         Invoke(nameof(SetMaxBax), 0.1f);
     }
@@ -174,7 +180,8 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < this.guardins.Length; i++)
         {
-            //this.guardins[i].ResetState();
+            //-------
+          //  this.guardins[i].ResetState();
         }
 
         this.hero.ResetState();
@@ -200,7 +207,8 @@ public class GameManager : MonoBehaviour
     {
         this.lives = lives;
         _result.ShowResult();
-        // livesText.text = "x" + lives.ToString();
+        //----
+      //   livesText.text = "x" + lives.ToString();
     }
 
     private void SetScore(int score)
@@ -209,7 +217,11 @@ public class GameManager : MonoBehaviour
         _result.ShowResult();
         // scoreText.text = score.ToString().PadLeft(2, '0');
     }
+    private void SetShilds()
+    {
 
+        SaveData.Save(SaveData.Shield, MacShild);
+    }
     public void HeroCaught()
     {
         if (hero.IsUseShield())
@@ -263,20 +275,37 @@ public class GameManager : MonoBehaviour
     {
         this.guardinMultiplier = 1;
     }
-
+    //------
+   
     private bool TrySpendBoost(string key)
     {
         if (SaveData.Has(key))
         {
+
+
             int count = SaveData.GetInt(key);
+           // CountShildText.text = SHILD_COUNT.ToString();
             return count > 0;
         }
         else
         {
             return false;
         }
-    }
 
+      /*  if (SHILD_COUNT>0)// (SaveData.Has(key))
+        {
+           SaveData.GetInt(key);            
+            SHILD_COUNT -= 1;
+            int count = SHILD_COUNT;//SaveData.GetInt(key);
+            CountShildText.text = SHILD_COUNT.ToString();
+            return count > 0;
+        }
+        else
+        {
+            return false;
+        }*/
+    }
+    //--------
     public void SetGuardinMode(string mode) {
         SaveData.Save(SaveData.GuardinMode, mode);
     }

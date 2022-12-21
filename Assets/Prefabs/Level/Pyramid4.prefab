@@ -2423,8 +2423,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _portal: {fileID: 7230101030100040290}
-  _maxRangePosition: {x: -5.5, y: 2.5}
-  _minRangePosition: {x: 4.5, y: -7.5}
+  _maxRangePosition: {x: 4.39, y: -7.46}
+  _minRangePosition: {x: -5.56, y: 2.38}
 --- !u!1 &7230101031595174304
 GameObject:
   m_ObjectHideFlags: 0
@@ -2717,6 +2717,7 @@ GameObject:
   - component: {fileID: 7230101031604697870}
   - component: {fileID: 7230101031604697868}
   - component: {fileID: 7230101031604697871}
+  - component: {fileID: 974016887}
   m_Layer: 10
   m_Name: Nodes
   m_TagString: Untagged
@@ -3237,6 +3238,22 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!19719996 &974016887
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7230101031604697865}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0.00001
 --- !u!1 &7230101031881948330
 GameObject:
   m_ObjectHideFlags: 0
@@ -4832,6 +4849,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9008549411848341846, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
   m_PrefabInstance: {fileID: 7230101032079501976}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &4653724205759971413 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2648999586671979213, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
+  m_PrefabInstance: {fileID: 7230101032079501976}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &4580046487198990684 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6618570267428727748, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
+  m_PrefabInstance: {fileID: 7230101032079501976}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3103342594129167747 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5712590939233464091, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
@@ -4843,16 +4870,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93fcf1a34c52d41a0ab59c1040aab8ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &4580046487198990684 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6618570267428727748, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
-  m_PrefabInstance: {fileID: 7230101032079501976}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &4653724205759971413 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2648999586671979213, guid: 8c3ebff26c1c140a0a2292a0978d4e01, type: 3}
-  m_PrefabInstance: {fileID: 7230101032079501976}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7931991080790522376
 PrefabInstance:
   m_ObjectHideFlags: 0

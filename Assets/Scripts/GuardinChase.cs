@@ -58,12 +58,17 @@ public class GuardinChase : GuardinBehavior
 
             if (isChase == false)
             {
-                if (_isObstacle == false && node.availableDirections.Count >= 2)
+                if (_isObstacle == false && node.availableDirections.Count >= 1)
                 {
                     if (_tempDirection == direction)
                         direction = GetNewDirection(node.availableDirections, direction);
 
                     _tempDirection = guardin.movement.direction;
+                }
+                if (_isObstacle == false && node.availableDirections.Count == 0)
+                {
+                    direction = -guardin.movement.direction;
+                    _tempDirection = direction;
                 }
             }
 
