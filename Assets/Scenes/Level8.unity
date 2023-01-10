@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &52789624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 52789626}
+  - component: {fileID: 52789625}
+  m_Layer: 0
+  m_Name: GlobalVariorOB
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &52789625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52789624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47aa7c153c406934f9ccb89b76bee9f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentLevelMax: 8
+  _KoefSpeedHero: 1
+--- !u!4 &52789626
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52789624}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21.08548, y: 20.799004, z: -11.206213}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &106139228
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,6 +471,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: All Level Data
       objectReference: {fileID: 0}
+    - target: {fileID: 2064793438220248475, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: Level
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064793438220248475, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: MaxLevel
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 3973579385760602106, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -562,6 +615,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6013017922745485659, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: CurentLevel
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6013017922879968941, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -602,6 +659,18 @@ PrefabInstance:
       propertyPath: orthographic size
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 6013017922982915621, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: LiveCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6013017922982915621, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: TimerShild
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6013017922982915621, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: maxTimeShild
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6013017923070015535, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -610,9 +679,29 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6013017923279392103, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: KoefSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6013017923279392103, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: ToucnTimeMax
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6013017923279392103, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: TouchDoubleTime
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 6013017923372383765, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
       propertyPath: m_RenderMode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8594740706653872608, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: Level
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8594740706653872608, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}
+      propertyPath: MaxLevel
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ee7e1743e667446da36942b030b2db8, type: 3}

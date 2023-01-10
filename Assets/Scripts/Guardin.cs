@@ -73,14 +73,14 @@ public class Guardin : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        SetTrigger(collision.gameObject, true);
+     //m   SetTrigger(collision.gameObject, true);
         
        
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        SetTrigger(collision.gameObject, true);
+      //m  SetTrigger(collision.gameObject, true);
 
        // if (collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
       // if(RayCaster())
@@ -89,21 +89,21 @@ public class Guardin : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        SetTrigger(collision.gameObject, false);
+      //m  SetTrigger(collision.gameObject, false);
 
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        SetTrigger(collision.gameObject, false);
+     //m   SetTrigger(collision.gameObject, false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Baxxxman"))
+       /*m if (collision.gameObject.layer == LayerMask.NameToLayer("Baxxxman"))
         {
             FindObjectOfType<GameManager>().HeroCaught();
-        }
+        }*/
 
         if (collision.TryGetComponent(out Bite bite))
         {
@@ -114,7 +114,7 @@ public class Guardin : MonoBehaviour
 
     private void SetTrigger(GameObject player, bool value)
     {
-        if (player.layer == LayerMask.NameToLayer("Baxxxman"))
+     /*m   if (player.layer == LayerMask.NameToLayer("Baxxxman"))
         {
             GameManager manager = FindObjectOfType<GameManager>();
 
@@ -126,7 +126,7 @@ public class Guardin : MonoBehaviour
             {
                 manager.HeroCaught();
             }
-        }
+        }*/
     }
 
     bool  RayCaster()

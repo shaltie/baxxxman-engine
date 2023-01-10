@@ -58,7 +58,13 @@ public class Movement : MonoBehaviour
         speedMultiplier = 1f;
         direction = initialDirection;
         nextDirection = direction;// Vector2.zero;
-        transform.position = startingPosition;
+        if (GetComponent<Hero>() != null)
+        {
+            if ((Vector2)transform.position != GetComponent<Hero>()._prewPosition)
+                transform.position = GetComponent<Hero>()._prewPosition;//startingPosition;
+        }
+        else
+            transform.position = startingPosition;
         rigidbody.isKinematic = false;
         enabled = true;
     }
@@ -144,13 +150,13 @@ public class Movement : MonoBehaviour
             {
                 Vector2 DirXX = new Vector2();                
                 DirXX = new Vector2(1, 0);
-                if (Occupied(DirXX) && BoxOccupied(DirXX))
+                if (Occupied(DirXX) || BoxOccupied(DirXX))
                 {
                     DirXX = new Vector2(-1, 0);
-                    if (Occupied(DirXX) && BoxOccupied(DirXX))
+                    if (Occupied(DirXX) || BoxOccupied(DirXX))
                     {
                         DirXX = new Vector2(0, 1);
-                        if (Occupied(DirXX) && BoxOccupied(DirXX))
+                        if (Occupied(DirXX) || BoxOccupied(DirXX))
                         {
                             DirXX = new Vector2(0, -1);
                         }

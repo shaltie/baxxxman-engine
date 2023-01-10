@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 [RequireComponent(typeof(Movement))]
 public class Hero : MonoBehaviour
 {
+    public Text TestText = null;
     [SerializeField] private EnemyType _enemyType;
     [SerializeField] private SwipeControl _swipeControl;
     [SerializeField] private int _maxCristalCount;
@@ -19,6 +21,7 @@ public class Hero : MonoBehaviour
     [SerializeField] private LayerMask _obstacleLayerGuardBoxer;
     public GameObject PosPoint = null;
     Obstacle OBSKUB = null;
+    [SerializeField] private bool ActiveLive = true;
     //public bool Kub = false;
     //FIX FIX FIX
     private readonly Dictionary<Vector2, Quaternion> _directions = new Dictionary<Vector2, Quaternion>()
@@ -44,16 +47,24 @@ public class Hero : MonoBehaviour
     private bool _isUseShield = false;
     private Rigidbody2D _rigidbody;
     public float distance;
+    public float KoefSpeed = 1;
 
     public Vector2 PosZero = new Vector2();
     public bool KUB = false;
     private Obstacle _obstacle;
     private Node _node;
     Vector2 DirectionMove = new Vector2();
+    //
+    [SerializeField] private int TouchNumber = 0;
+    [SerializeField] private float TouchDoubleTime = 0.4f;
+    [SerializeField] private float ToucnTimeMax = 0.4f;
+    [SerializeField] private bool TouchDoubleEnam = false;
+    Vector2 touch1Pos = new Vector2();//Input.GetTouch(0).position;
+    Vector2 touch2Pos = new Vector2();//Input.GetTouch(1).position;
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-
+        _prewPosition = transform.position;
         spriteRenderer = GetComponent<SpriteRenderer>();
         collider = GetComponent<Collider2D>();
         movement = GetComponent<Movement>();
@@ -63,6 +74,9 @@ public class Hero : MonoBehaviour
     private void Start()
     {
         _nextPosition = transform.position;
+        KoefSpeed = _manager.KoefSpeedReed * 0.1f;
+        touch1Pos = Vector2.zero;
+        touch2Pos = Vector2.zero;
     }
 
     private void OnEnable()
@@ -96,8 +110,30 @@ public class Hero : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out Fire fire))
-            FindObjectOfType<GameManager>().HeroCaught();
-
+            if (ActiveLive)
+            {
+               /* FindObjectOfType<GameManager>().HeroCaught();
+                ActiveLive = false;*/
+                ActiveLive =! FindObjectOfType<GameManager>().HeroCaught();
+            }
+        if (collision.TryGetComponent(out Guardin guard))
+        {
+            if (ActiveLive)
+            {
+               /* FindObjectOfType<GameManager>().HeroCaught();
+                ActiveLive = false;*/
+                ActiveLive = !FindObjectOfType<GameManager>().HeroCaught();
+            }
+        }
+        if (collision.TryGetComponent(out LavaObstacle lava))
+        {
+            if (ActiveLive)
+            {
+               /* FindObjectOfType<GameManager>().HeroCaught();
+                ActiveLive = false;*/
+                ActiveLive = !FindObjectOfType<GameManager>().HeroCaught();
+            }
+        }
         if (collision.TryGetComponent(out Cristal cristal))
         {
             cristal.HideWall();
@@ -126,8 +162,7 @@ public class Hero : MonoBehaviour
          /*   _node = node;
             KUB = true;*/
         }
-        if (collision.TryGetComponent(out LavaObstacle lava))
-            FindObjectOfType<GameManager>().HeroCaught();
+        
     }
 
     [SerializeField] public Vector2 _nextPosition;
@@ -139,6 +174,10 @@ public class Hero : MonoBehaviour
         if(PosPoint!=null)
             PosPoint.transform.position = _nextPosition;
         RotateHeroNew();
+
+        TouchDouble();
+        TimerTouchDouble();
+        TouchEnam();
     }
     private void FixedUpdate()
     {
@@ -313,21 +352,19 @@ public class Hero : MonoBehaviour
             {
                 _nextPosition = position + _direction;
                 DirectionMove = _direction;
-                
             }
             else
             {
                 if (CheckAvailableDirection(DirectionMove))
                 {
                     _nextPosition = position;
-                   
                 }
                 else
                 {
                     _nextPosition = position + DirectionMove;
-                    
                 }
             }
+            _prewPosition = position;
             CheckBoxMoveCollider();
         }
         else
@@ -347,7 +384,7 @@ public class Hero : MonoBehaviour
 
             if (!KUB)
             {
-                transform.position = Vector2.MoveTowards(position, _nextPosition, movement.speed * movement.speedMultiplier * Time.fixedDeltaTime);
+                transform.position = Vector2.MoveTowards(position, _nextPosition, (movement.speed+ KoefSpeed) * movement.speedMultiplier * Time.fixedDeltaTime);
                
             }
             else
@@ -362,37 +399,50 @@ public class Hero : MonoBehaviour
     {
         RaycastHit2D hitDir = Physics2D.Raycast((Vector2)transform.position, _direction.normalized, 2f, _obstacleLayer);
         RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, DirectionMove, 2f, _obstacleLayer);
-        //Physics2D.BoxCast(transform.position, Vector2.one * 0.5f, 0f, direction, 1, _obstacleLayer);
         RaycastHit2D hitBox = Physics2D.Raycast(transform.position, DirectionMove, 1f, _obstacleLayerBox);//на куб
-        //  Physics2D.Raycast((Vector2)transform.position, DirectionMove, 1f, _obstacleLayerBox);//на куб
+        RaycastHit2D hitWater = Physics2D.Raycast(transform.position, DirectionMove, 1f, _obstacleLayer);//на воду
         RaycastHit2D hitBoxGuard = Physics2D.Raycast((Vector2)transform.position, DirectionMove, 2f, _obstacleLayerGuardBoxer);//на охранника
-                                                                                                                // _obstacleLayerGuardBoxer
         KUB = false;
-        if (hitBox.collider != null)
+        if (hitBox.collider != null)//если впереди ящик
         {
             if (hitBox.collider.gameObject.GetComponentInParent<Obstacle>() != null)
             {
                 OBSKUB = hitBox.collider.gameObject.GetComponentInParent<Obstacle>();
-                if (hit.collider == null)
+                if (hit.collider == null)//если по направлению толчка нет райкаста со стенами
                 {
-                    //hitBox.collider.gameObject.GetComponentInParent<Obstacle>().MoveNewTriggers(_nextPosition /*+ DirectionMove*/, DirectionMove, movement.speed, movement.speedMultiplier);
-                    // KUB = false;
-                    if (hitBoxGuard.collider == null)
+                    if (hitBoxGuard.collider == null)//если перед ящиком нет охранников
+                    {
+                        //толкаем
+                        hitBox.collider.gameObject.GetComponentInParent<Obstacle>().MoveNewTriggers(_nextPosition /*+ DirectionMove*/, DirectionMove, movement.speed, movement.speedMultiplier);
+                        KUB = false;
+
+                        
+                    }
+                    else
+                    {//не толкаем
+                        KUB = true;
+                    }
+                }
+                else
+                {//не толкаем
+                    if(hit.collider.gameObject.tag!="Water")
+                        KUB = true;
+                    if (hit.collider.gameObject.tag == "Water")
                     {
                         hitBox.collider.gameObject.GetComponentInParent<Obstacle>().MoveNewTriggers(_nextPosition /*+ DirectionMove*/, DirectionMove, movement.speed, movement.speedMultiplier);
                         KUB = false;
 
                     }
-                    else
-                    {
-                        KUB = true;
-                    }
-                }
-                else
-                {
-                    KUB = true;
-                }
+                    /* else
+                     {
+                         if (hitWater.collider != null)
+                             OBSKUB.BoxWater(hitWater.collider.gameObject);
 
+
+                     }*/
+                }
+                if (hitWater.collider != null)
+                    OBSKUB.BoxWater(hitWater.collider.gameObject);
             }
         }
     }
@@ -492,6 +542,7 @@ public class Hero : MonoBehaviour
         _direction = Vector2.zero;
         _expiredTime = 0;
         _isStartPlayAnimation = true;
+        ActiveLive = true;
     }
 
     public void DeathSequence()
@@ -512,6 +563,12 @@ public class Hero : MonoBehaviour
 
     private void Swipe(Vector3 direction)
     {
+        //--moe
+        if ((Vector2)direction == _direction)
+        {
+            _manager.Accelerate();
+        }
+        //--
         if (direction == Vector3.up)
         {
             _direction = Vector2.up;
@@ -528,6 +585,7 @@ public class Hero : MonoBehaviour
         {
             _direction = Vector2.right;
         }
+        
     }
 
     private Quaternion GetRotation(Vector2 direction)
@@ -544,5 +602,71 @@ public class Hero : MonoBehaviour
         yield return new WaitForSeconds(duration);
         _isPlayAnimation = false;
         callback?.Invoke();
+    }
+
+    private void TouchDouble()
+    {
+       // TestText.text = Input.touchCount.ToString() +" " + TouchNumber.ToString()+ " " + TouchDoubleTime.ToString();
+        if(TouchNumber>1)
+        {
+            _manager.UseShield();
+            TouchNumber = 0;
+            TouchDoubleEnam = false;
+            TouchDoubleTime = ToucnTimeMax;
+            touch1Pos = Vector2.zero;
+            touch2Pos = Vector2.zero;
+        }
+       /* if (Input.touchCount == 2)
+        {
+            var touch1Pos = Input.GetTouch(0).position;
+            var touch2Pos = Input.GetTouch(1).position;
+            float DistanceTouch = Vector2.Distance(touch1Pos, touch2Pos);
+            if(distance<1)
+            {
+                _manager.UseShield();
+            }
+        }*/
+    }
+    private void TouchEnam()
+    {
+        if (Input.touchCount > 0 && TouchDoubleTime > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Ended)
+            {
+                TouchDoubleEnam = true;
+                
+                if (touch1Pos == Vector2.zero)
+                {
+                    touch1Pos = Input.GetTouch(0).position;
+                    TouchNumber++;
+                    return;
+                }
+                else
+                {
+                    touch2Pos = Input.GetTouch(0).position;
+                    float DistanceTouch = Vector2.Distance(touch1Pos, touch2Pos);
+                    if(DistanceTouch<20)
+                        TouchNumber++;
+                }
+            }
+        }       
+    }
+
+    private void TimerTouchDouble()
+    {
+        if (TouchDoubleEnam)
+        {
+            if (TouchDoubleTime > 0)
+                TouchDoubleTime -= 1 * Time.deltaTime;
+            else
+            {
+                TouchDoubleTime = ToucnTimeMax;
+                TouchNumber = 0;
+                TouchDoubleEnam = false;
+                touch1Pos = Vector2.zero;
+                touch2Pos = Vector2.zero;
+            }
+        }
     }
 }

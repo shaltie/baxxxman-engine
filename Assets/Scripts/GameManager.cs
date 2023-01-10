@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private const float _playShieldTime = 10;
     [SerializeField] private Transform _wall;
     [SerializeField] private Coroutine _shieldPlayJob;
+    [SerializeField] private Coroutine _shieldPlayJobSecond;
 
     public int LiveCount = 3;
 
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public Text livesText;
     public int MacShild = 6;
-
+    public float KoefSpeedReed = 0;
     public bool IsPlayShield { get; private set; } = false;
     public int guardinMultiplier { get; private set; } = 1;
 
@@ -39,17 +40,26 @@ public class GameManager : MonoBehaviour
     // public int Level { get; private set; }
     public float NextSpeed => _nextSpeed;
     public int NextHealthCount => _nextHealthCount;
+    //---
+    public float maxTimeShild = 2f;
+    public bool EnamShield = false;
+    public float TimerShild = 2f;
 
     private void Start()
     {
-     //   SaveData.Save("Level", 0);
+       // SaveData.Save(SaveData.Shield, 4);
         SetupLevel();
         NewGame();
+        _result.GenericBonusBut();
        // CountShildText.text = SHILD_COUNT.ToString();
         _result.ShowResult();
         Invoke(nameof(SetMaxBax), 0.1f);
+        
     }
-
+    private void Update()
+    {
+        PlayTemerShild();
+    }
     private void SetupLevel()
     {
         //int localLevel = 0; // Now al scenes must have only 1 level in _maps; @TODO add multiple local levels logic
@@ -61,6 +71,9 @@ public class GameManager : MonoBehaviour
             coin.gameObject.SetActive(true);
 
         guardins = mapScript.Guardins.ToArray();
+
+        MacShild = SaveData.GetInt(SaveData.Shield);
+        KoefSpeedReed = SaveData.GetInt(SaveData.KoefSpeedHero);
     }
 
     public void SaveNextLevel()
@@ -93,19 +106,70 @@ public class GameManager : MonoBehaviour
 
     public void UseShield()
     {
-        if (TrySpendBoost(SaveData.Shield) && IsPlayShield == false)
-            PlayShield(_playShieldTime);
+        if (TrySpendBoost(SaveData.Shield) && IsPlayShield == false)//--
+        {
+            if (SaveData.GetInt(SaveData.Shield) > 0)
+            {
+                int shieldCount = SaveData.GetInt(SaveData.Shield) - 1;
+                SaveData.Save(SaveData.Shield, shieldCount);
+            }
+            // PlayShield(_playShieldTime);
+            UsedPlayShield();
+        }
     }
 
     public void PlayShield(float duration = _playShieldTime)
     {
-        if (_shieldPlayJob != null)
-        {
-            StopCoroutine(_shieldPlayJob);
-            _shieldPlayJob = null;
-        }
+        UsedPlayShield();
+        /* if (_shieldPlayJob != null)
+         {
+             StopCoroutine(_shieldPlayJob);
+             _shieldPlayJob = null;
+         }
 
-        _shieldPlayJob = StartCoroutine(WaitPlayShield(duration));
+             _shieldPlayJob = StartCoroutine(WaitPlayShield(duration));
+         if (IsPlayShield == false)
+         _shieldPlayJobSecond = StartCoroutine(WaitPlayShield(duration));*/
+    }
+
+    public void UsedPlayShield()
+    {
+        EnamShield = true;
+        if (TimerShild < maxTimeShild)
+            TimerShild += maxTimeShild;
+    }
+    public void PlayTemerShild()
+    {
+        if(EnamShield)
+        {
+            if (TimerShild > 0)
+            {
+                TimerShild -= 1 * Time.deltaTime;
+                //--
+                _result.ShowResult();
+
+                hero.PlayShieldAnimation(TimerShild);
+
+                IsPlayShield = true;
+                foreach (var guardin in guardins)
+                    guardin.Collider.isTrigger = true;
+               
+
+                
+                //--
+            }
+            else
+            {
+                IsPlayShield = false;
+                foreach (var guardin in guardins)
+                    guardin.Collider.isTrigger = false;
+
+                TimerShild = maxTimeShild;
+                EnamShield = false;
+
+            }
+
+        }
     }
 
     public void StopBite()
@@ -147,9 +211,10 @@ public class GameManager : MonoBehaviour
         SetLives(LiveCount);
         NewRound();
         SetShilds(); //--moe
+        
         //---
-     //   int Level = 1;
-     //   SaveData.Save(SaveData.Level, Level.ToString());
+        //   int Level = 1;
+        //   SaveData.Save(SaveData.Level, Level.ToString());
         //---
         _result.ShowResult();
         Invoke(nameof(SetMaxBax), 0.1f);
@@ -158,6 +223,7 @@ public class GameManager : MonoBehaviour
     private void SetMaxBax()
     {
         MaxCount = FindObjectsOfType<Bax>(true).ToList().Count;
+        SetScore(0);
         _result.ShowResult();
     }
 
@@ -169,6 +235,7 @@ public class GameManager : MonoBehaviour
 
         ResetState();
         SetGuardinMode("scatter");
+        SetScore(0);
     }
 
     private void ResetState()
@@ -222,10 +289,10 @@ public class GameManager : MonoBehaviour
 
         SaveData.Save(SaveData.Shield, MacShild);
     }
-    public void HeroCaught()
+    public bool HeroCaught()
     {
         if (hero.IsUseShield())
-            return;
+            return false;
 
         this.hero.DeathSequence();
 
@@ -239,12 +306,13 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
+        return true;
     }
 
     public void GuardinCaught(Guardin guardin)
     {
         int points = guardin.points * this.guardinMultiplier;
-        SetScore(this.Count + points);
+        //SetScore(this.Count + points);
         this.guardinMultiplier++;
     }
 
@@ -312,8 +380,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator WaitPlayShield(float duration)
     {
-        int shieldCount = SaveData.GetInt(SaveData.Shield) - 1;
-        SaveData.Save(SaveData.Shield, shieldCount);
+        
         _result.ShowResult();
 
         hero.PlayShieldAnimation(duration);
