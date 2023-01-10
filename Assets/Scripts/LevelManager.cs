@@ -8,10 +8,12 @@ public class LevelManager : MonoBehaviour
 {
     string levelName = "Scenes/Level";
     public int Level;//{get; private set;}
-    public int MaxLevel = 9;
+    public int MaxLevel = 12;
+    public bool LevelMenuFinal = false;
+    [SerializeField] private bool NextLevel = false;
     void Awake()
     {
-       
+        NextLevel = false;
         GetLevel();
 
     }
@@ -38,16 +40,31 @@ public class LevelManager : MonoBehaviour
 
     public void SetNextLevelAsActual()
     {
-        if (Level < MaxLevel)
+        if (!NextLevel)//это для однократного вызова
         {
-            Level++;
-            SaveData.Save(SaveData.Level, Level.ToString());
-            
-        }
-        else//moe
-        {
-            Level = 1;
-            SaveData.Save(SaveData.Level, Level.ToString());
+            if (Level < MaxLevel)
+            {
+                //moe--
+                GlobalVarior GLVAR = FindObjectsOfType<GlobalVarior>()[0];
+                Debug.Log("LEVEL next = " + Level + 1);
+                if (GLVAR.GetCurrentLevelMax() < Level+1)
+                {
+                    Level++;
+                    GLVAR.SetCurrentLevelMax(Level);
+                }
+                else
+                    Level = GLVAR.GetCurrentLevelMax();
+
+                SaveData.Save(SaveData.Level, Level.ToString());
+                NextLevel = true;
+            }
+            else//moe
+            {
+                /*Level = MaxLevel;
+                SaveData.Save(SaveData.Level, Level.ToString());*/
+                LevelMenuFinal = true;
+                NextLevel = true;
+            }
         }
     }
 
@@ -57,9 +74,16 @@ public class LevelManager : MonoBehaviour
     */
     public void LoadActualLevel()
     {
-        string _level = levelName + Level.ToString();
+        if (!LevelMenuFinal)
+        {
+            string _level = levelName + Level.ToString();
 
-        SceneManager.LoadScene(_level);
+            SceneManager.LoadScene(_level);
+        }
+        else
+        {
+            SceneManager.LoadScene("Menu");
+        }
         return;
         //if(SceneManager.GetSceneByName(_level).IsValid()){
         //    Debug.Log("LoadActualLevel: Load <" + _level + "> Scene");

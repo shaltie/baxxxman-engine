@@ -2473,7 +2473,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Level: 1
-  MaxLevel: 9
+  MaxLevel: 12
+  LevelMenuFinal: 0
+  NextLevel: 0
 --- !u!114 &1430602194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2488,7 +2490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _template: {fileID: 1342337136161746828, guid: 1c7327aa62adf4e4d9802f8ccac781b2, type: 3}
   _target: {fileID: 2131277552}
-  _levelCount: 9
+  _levelCount: 12
 --- !u!1 &1676946590
 GameObject:
   m_ObjectHideFlags: 0

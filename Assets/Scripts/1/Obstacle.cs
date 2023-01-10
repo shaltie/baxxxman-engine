@@ -110,4 +110,11 @@ public class Obstacle : MonoBehaviour
         }
         //   return hit.collider == null;
     }
+    public void BoxWater(GameObject WaterObject)
+    {
+        GetComponent<BoxCollider2D>().enabled = false;
+        WaterObject.GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 222);
+
+    }
 }

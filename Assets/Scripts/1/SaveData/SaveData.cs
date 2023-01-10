@@ -12,6 +12,9 @@ public sealed class SaveData
     public const string Sound = nameof(Sound);
     public const string Level = nameof(Level);
     public const string GuardinMode = nameof(GuardinMode);
+    public const string Dash = nameof(Dash);
+    public const string SpeedUp = nameof(SpeedUp);
+    public const string KoefSpeedHero = nameof(KoefSpeedHero);
 
     public static bool Has(string key)
     {
